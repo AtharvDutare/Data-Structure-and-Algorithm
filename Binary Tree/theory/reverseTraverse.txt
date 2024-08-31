@@ -1,0 +1,71 @@
+Reverse traversal methods are variations of standard tree traversal techniques used primarily with binary trees. Each type of traversal visits nodes in a specific order. Here’s a breakdown of reverse inorder, reverse preorder, and reverse postorder traversals:
+
+1. Reverse Inorder Traversal
+
+In a standard inorder traversal, the order of visiting nodes is:
+- Left subtree
+- Node
+- Right subtree
+
+In reverse inorder traversal, this order is reversed:
+- Right subtree
+- Node
+- Left subtree
+
+Example:
+For the binary tree:
+
+      2 
+     / \ 
+    1   3 
+
+The reverse inorder traversal would yield: 3, 2, 1.
+
+2. Reverse Preorder Traversal
+
+In a standard preorder traversal, the order of visiting nodes is:
+- Node
+- Left subtree
+- Right subtree
+
+In reverse preorder traversal, the order is reversed:
+- Right subtree
+- Left subtree
+- Node
+
+Example:
+For the same binary tree:
+
+      2 
+     / \ 
+    1   3 
+
+The reverse preorder traversal would yield: 3, 1, 2.
+
+3. Reverse Postorder Traversal
+
+In a standard postorder traversal, the order of visiting nodes is:
+- Left subtree
+- Right subtree
+- Node
+
+In reverse postorder traversal, the order is reversed:
+- Node
+- Right subtree
+- Left subtree
+
+Example:
+For the same binary tree:
+
+      2 
+     / \ 
+    1   3 
+
+The reverse postorder traversal would yield: 2, 3, 1.
+
+Summary
+
+Reverse Inorder: Visit right, node, left.
+Reverse Preorder: Visit right, left, node.
+Reverse Postorder: Visit node, right, left.
+These traversal methods can be useful in various algorithms and applications, particularly in tree-based data structures.
