@@ -4,7 +4,7 @@ public:
     vector<vector<int>> construct2DArray(vector<int>& original, int m, int n) {
         int k=original.size();
         if(k!=m*n) {
-            return {};
+            return {}
         }
         int p=0;
         vector<vector<int>> ans(m,vector<int>(n,0));
