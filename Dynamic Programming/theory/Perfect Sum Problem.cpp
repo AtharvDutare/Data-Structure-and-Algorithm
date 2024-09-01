@@ -12,6 +12,7 @@ class Solution{
 	    if(sum-arr[index]>=0) {
 	        if(sum==0) {
     	        include++;
+				//because of this condition if work on contraints 0<=arrr[i]
     	    }
 	        include=solve(arr,n,index+1,sum-arr[index],dp);
 	    }
