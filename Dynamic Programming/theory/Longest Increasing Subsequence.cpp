@@ -39,7 +39,7 @@ public:
         //dp[i] signify the lis which end at i
         int maxi=1;
         for(int i=0;i<n;i++) {
-            for(int prev=0;prev<=i;prev++) {
+            for(int prev=0;prev<i;prev++) {
                 if(arr[prev]<arr[i]) {
                     dp[i]=max(1+dp[prev],dp[i]);
                 }
