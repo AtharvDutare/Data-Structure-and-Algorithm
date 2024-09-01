@@ -50,15 +50,16 @@ public:
         return maxi;
     }
 
-    void tabPrint(vector<int> &arr) {
+    vector<int> tabPrint(vector<int> &arr) {
         int n=arr.size();
         vector<int>dp(n,1),hash(n,0);
         int lastIndex=0;
-        accumulate(hash.begin(),hash.end(),0);
+        //accumulate(hash.begin(),hash.end(),0);
         //dp[i] signify the lis which end at i
         int maxi=1;
         for(int i=0;i<n;i++) {
-            for(int prev=0;prev<=i;prev++) {
+            hash[i]=i;
+            for(int prev=0;prev<i;prev++) {
                 if(arr[prev]<arr[i]&&1+dp[prev]>dp[i]) {
                     dp[i]=dp[prev]+1;
                     hash[i]=prev;
@@ -72,12 +73,13 @@ public:
         }
 
         vector<int> track;
+        track.push_back(arr[lastIndex]);
         while(hash[lastIndex]!=lastIndex) {
-            track.push_back(arr[hash[lastIndex]]);
             lastIndex=hash[lastIndex];
+            track.push_back(arr[lastIndex]);
         }
         reverse(track.begin(),track.end());
-
+        return track;
     }
     /*time complexity is O(n*log(n)) and space is O(N) we can override the input arr but which not pefer in interview*/
     int tabBinarySearch(vector<int> &arr) {
