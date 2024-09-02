@@ -4,6 +4,8 @@
         "chrono": "cpp",
         "functional": "cpp",
         "xstring": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "queue": "cpp",
+        "stack": "cpp"
     }
 }
