@@ -6,6 +6,8 @@ public:
         if(dp[i][j]!=-1) {
             return dp[i][j];
         }
+
+        
         int ans=INT_MAX;
         int cost=arr[j+1]-arr[i-1];
         for(int k=i;k<=j;k++) {
