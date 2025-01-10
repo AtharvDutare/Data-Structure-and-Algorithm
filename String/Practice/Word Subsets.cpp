@@ -48,3 +48,55 @@ public:
         return ans;
     }
 };
+// optimized solution
+//time complexity: O(n+m) where n is the number of words in words1 and m is the number of words in words2
+//space complexity: O(n)
+
+// approach: create a frequency array for each word in words1
+// then create a max frequency array for all words in words2.
+// Then for each word in words1, check if it is a subset of the max frequency array.
+// If it is not a subset of the max frequency array, then add it to the answer.
+// This is because if a word is a subset of the max frequency array, then it is a subset of all words in words2.
+
+class Solution {
+public:
+    vector<string> wordSubsets(vector<string>& words1, vector<string>& words2) {
+        int n=words1.size();
+        int m=words2.size();
+        vector<vector<int>> freq;
+        for(int i=0;i<n;i++) {
+            string s=words1[i];
+            vector<int> t(26,0);
+            for(int j=0;j<s.length();j++) {
+                t[s[j]-'a']++;
+            }
+            freq.push_back(t);
+        }
+        vector<int> freq1(26,0);
+        for(int i=0;i<m;i++) {
+            string s=words2[i];
+            vector<int> t(26,0);
+            for(int j=0;j<s.length();j++) {
+                t[s[j]-'a']++;
+            }
+            for(int k=0;k<26;k++) {
+                freq1[k]=max(freq1[k],t[k]);
+            }
+        }
+        vector<string> ans;
+        for(int i=0;i<n;i++) {
+            vector<int> t1=freq[i];
+            int b1=0;
+            for(int j=0;j<26;j++) {
+                if(t1[j]<freq1[j]) {
+                    b1=1;
+                    break;
+                }
+            }
+            if(!b1) {
+                ans.push_back(words1[i]);
+            }
+        }
+        return ans;
+    }
+};
