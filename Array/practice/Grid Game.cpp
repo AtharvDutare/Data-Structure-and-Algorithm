@@ -64,3 +64,24 @@ public:
         return ans;
     }
 };
+
+// correct solution
+// time complexity O(n)
+// space complexity O(1)
+
+class Solution {
+public:
+    long long gridGame(vector<vector<int>>& grid) {
+        long long upperSide=accumulate(grid[0].begin(),grid[0].end(),0LL);
+        //cout<<rightSide<<endl;
+        long long lowerSide=0LL;
+        int n=grid[0].size();
+        long long minSecondRobot=LLONG_MAX;
+        for(int i=0;i<n;i++) {
+            upperSide-=grid[0][i];
+            minSecondRobot=min(minSecondRobot,max(upperSide,lowerSide));
+            lowerSide+=grid[1][i];
+        }
+        return minSecondRobot;
+    }
+};
