@@ -51,18 +51,38 @@ void no() { cout<<"NO\n"; }
 void solve()
 {
     int n;
-	cin >> n;
-	string s;
-	cin >> s;
-	set<char> st;
-	int ans=0;
-	for(int i=0;i<n;i++) {
-		st.insert(s[i]);
-		ans+=st.size();
-	}
-	cout<<ans<<endl;
- 
-     
+    cin>>n;
+    string s;
+    cin>>s;
+    bool isSorted=true;
+    for(int i=0;i<n;i++) {
+        if(s[i]<s[i-1]) isSorted=false;
+    }
+    if(isSorted) {
+        cout<<"Bob"<<endl;
+        return;
+    }
+    else{
+        cout<<"Alice"<<endl;
+    }
+    vector<int> ans;
+    int p1=0,p0=n-1;
+    while(p1<p0) {
+        //cout<<p0<<" "<<p1<<endl;
+        while(p1<n&&s[p1]!='1') p1++;
+        while(p0>-1&&s[p0]!='0') p0--;
+        if(p0<=p1) break;
+        ans.pb(p1);
+        ans.pb(p0);
+        p1++;
+        p0--;
+        
+    }
+    cout<<ans.size()<<endl;
+    sort(all(ans));
+    for(int i=0;i<ans.size();i++) {
+        cout<<ans[i]+1<<" ";
+    }cout<<endl;
 }
 
 int main()

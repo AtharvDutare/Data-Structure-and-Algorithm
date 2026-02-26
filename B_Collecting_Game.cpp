@@ -48,21 +48,68 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
+// int bn(vll &c,int ele) {
+//     int s=0;
+//     int e=c.size();
+//     while(s<=e) {
+//         int mid=(e-s)/2+s;
+//         if(c[mid]==ele) {
+//             return mid;
+//         }
+//         else if(c[mid]<ele) {
+//             s=mid+1;
+//         }
+//         else {
+//             e=mid-1;
+//         }
+//     }
+//     return c.size();
+// }
+
+// int pp(vll &a,vll &b,vll &c,int i,int sum) {
+//     if(i>=a.size()){
+//         return a.size();
+//     }
+//     if(sum<c[i]) {
+//         return i;
+//     }
+//     return pp(a,b,c,bn(c,c[i]),c[i]);
+
+// }
+
 void solve()
 {
-    int n;
-	cin >> n;
-	string s;
-	cin >> s;
-	set<char> st;
-	int ans=0;
-	for(int i=0;i<n;i++) {
-		st.insert(s[i]);
-		ans+=st.size();
-	}
-	cout<<ans<<endl;
- 
-     
+    ll n;
+    cin>>n;
+    vll a(n);
+    vector<pll> p;
+    for(int i=0;i<n;i++) {
+        cin>>a[i];
+        p.push_back({a[i],i});
+    }
+    sort(all(p));
+    vll pre(n);
+    pre[0]=p[0].first;
+    f(i,1,n) {
+        pre[i]=pre[i-1]+p[i].first;
+    }
+    vector<ll> ans(n);
+    for(int i=0;i<n;i++) {
+        int j=i;
+        int found=i;
+        while(j<n) {
+            pll temp={pre[j],2e18};
+            int idx=lower_bound(all(p),temp)-p.begin()-1;
+            if(idx==j) {
+                break;
+            }
+            found+=idx-j;
+            j=idx;
+        }
+        ans[p[i].second]=found;
+    }
+    print_v(ans);
+
 }
 
 int main()

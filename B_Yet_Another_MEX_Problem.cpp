@@ -50,19 +50,20 @@ void no() { cout<<"NO\n"; }
 
 void solve()
 {
-    int n;
-	cin >> n;
-	string s;
-	cin >> s;
-	set<char> st;
-	int ans=0;
-	for(int i=0;i<n;i++) {
-		st.insert(s[i]);
-		ans+=st.size();
-	}
-	cout<<ans<<endl;
- 
-     
+    ll n,k;
+    cin>>n>>k;
+    vi arr(n);
+    for(int i=0;i<n;i++) {
+        cin>>arr[i];
+    }
+    set<ll> st;
+    for(int i=0;i<n+1;i++) {
+        st.insert(i);
+    }
+    for(int i=0;i<n;i++) {
+        st.erase(arr[i]);
+    }
+    cout<<min(k-1,*st.begin())<<endl;
 }
 
 int main()

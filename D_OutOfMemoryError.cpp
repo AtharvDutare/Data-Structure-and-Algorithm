@@ -56,10 +56,31 @@ void solve()
     for(int i=0;i<n;i++) {
         cin>>arr[i];
     }
+    vll arr2=arr;
     vector<pll> kp(m);
+    int prev=0;
     for(int i=0;i<m;i++) {
-        cin>>kp[i];
+        ll x,y;
+        cin>>x>>y;
+        kp[i]={x,y};
     }
+    for(int i=0;i<m;i++) {
+        pll t=kp[i];
+        ll x=t.first;
+        ll y=t.second;
+        arr[x-1]=arr[x-1]+y;
+        if(arr[x-1]>h) {
+            for(int j=prev;j<=i;j++) {
+                pll p=kp[j];
+                arr[p.first-1]-=p.second;
+            }
+            prev=i+1;
+        }
+    }
+
+    for(int i=0;i<n;i++) {
+        cout<<arr[i]<<" ";
+    }cout<<endl;
 }
 
 int main()

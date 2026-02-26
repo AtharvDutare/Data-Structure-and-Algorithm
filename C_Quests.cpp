@@ -46,23 +46,45 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
+void ia(vll &arr) {
+    int n=arr.size();
+    for(int i=0;i<n;i++) {
+        cin>>arr[i];
+    }
+}
+
 /* clang-format on */
+
+/*
+    //BLACK-BOARD
+
+    3 2 4 1 4
+    2 3 1 4 7
+    
+    at index 0,0 either 0,1 or 1,0 if 0,1 and same repeat this 
+    else after 1,0 if(1,0>0,1)
+
+*/
 
 void solve()
 {
-    int n;
-	cin >> n;
-	string s;
-	cin >> s;
-	set<char> st;
-	int ans=0;
-	for(int i=0;i<n;i++) {
-		st.insert(s[i]);
-		ans+=st.size();
-	}
-	cout<<ans<<endl;
- 
-     
+    ll n,k;
+    cin>>n>>k;
+    vll a(n), b(n);
+    ia(a);
+    ia(b);
+    ll ans=0;
+    ll maxi=0;
+    ll sum=0;
+    f(i,0,min(n,k)) {
+        //cout<<"hello"<<endl;
+        sum+=a[i];
+        maxi=max(maxi,b[i]);
+        ans=max(ans,sum+((k-(i+1))*maxi));
+        //cout<<ans<<endl;
+    }
+    cout<<ans<<endl;
+    
 }
 
 int main()

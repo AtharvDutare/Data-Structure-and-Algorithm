@@ -48,21 +48,46 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
+bool isGood(vi &a,vi &b,vi &c,int i ,int j,int k) {
+    int n=a.size();
+    int w=n;
+    while(w--) {
+        if(a[i]>b[j]||b[j]>c[k]||a[i]>c[k]) {
+            return false;
+        }
+        i=(i+1)%n;
+        j=(j+1)%n;
+        k=(k+1)%n;
+    }
+    return true;
+}
+
+
 void solve()
 {
-    int n;
-	cin >> n;
-	string s;
-	cin >> s;
-	set<char> st;
-	int ans=0;
-	for(int i=0;i<n;i++) {
-		st.insert(s[i]);
-		ans+=st.size();
-	}
-	cout<<ans<<endl;
- 
-     
+    ll n;
+    cin>>n;
+    vi a(n),b(n),c(n);
+    for(int i=0;i<n;i++) {
+        cin>>a[i];
+    }
+    for(int i=0;i<n;i++) {
+        cin>>b[i];
+    }
+    for(int i=0;i<n;i++) {
+        cin>>c[i];
+    }
+    int ans=0;
+    for(int i=0;i<n;i++) {
+        for(int j=0;j<n;j++) {
+            for(int k=0;k<n;k++) {
+                if(a[i]<b[j]&&b[j]<c[k]) {
+                    ans+=isGood(a,b,c,i,j,k);
+                }
+            }
+        }
+    }
+    cout<<ans<<endl;
 }
 
 int main()

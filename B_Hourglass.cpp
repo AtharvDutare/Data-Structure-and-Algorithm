@@ -50,19 +50,28 @@ void no() { cout<<"NO\n"; }
 
 void solve()
 {
-    int n;
-	cin >> n;
-	string s;
-	cin >> s;
-	set<char> st;
-	int ans=0;
-	for(int i=0;i<n;i++) {
-		st.insert(s[i]);
-		ans+=st.size();
-	}
-	cout<<ans<<endl;
- 
-     
+    ll s,k,m;
+    cin>>s>>k>>m;
+    if(s>k) {
+        int t=m%(2*k);
+        if(t<=k-1) {
+            cout<<s-t<<endl;
+        }
+        else {
+            cout<<k-(t-k)<<endl;
+        }
+        // if(t<=k-1) {
+        //     cout<<s-m%k<<endl;
+        // }
+        // else {
+        //     cout<<k-m%k<<endl;
+        // }
+    }
+    else{
+        //s<=k
+        int t=m%k;
+        cout<<max(0ll,s-t)<<endl;
+    }
 }
 
 int main()

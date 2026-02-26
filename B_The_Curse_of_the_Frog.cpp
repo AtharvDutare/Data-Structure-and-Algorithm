@@ -50,19 +50,30 @@ void no() { cout<<"NO\n"; }
 
 void solve()
 {
-    int n;
-	cin >> n;
-	string s;
-	cin >> s;
-	set<char> st;
-	int ans=0;
-	for(int i=0;i<n;i++) {
-		st.insert(s[i]);
-		ans+=st.size();
-	}
-	cout<<ans<<endl;
- 
-     
+    cout<<setprecision(32);
+    ll n,p;
+    cin>>n>>p;
+    vector<tuple<ll,ll,ll>> vp;
+    ll maxdi=0;
+    for(int i=0;i<n;i++) {
+        ll x,y,z;
+        cin>>x>>y>>z;
+        vp.pb({x,y,z});
+        maxdi=max(maxdi,x*y-z);
+        p-=x*(y-1);
+    }
+    if(p<=0) {
+        cout<<0<<endl;
+    }
+    else {
+        if(maxdi>0) {
+            cout<<((p+maxdi-1)/maxdi)<<endl;
+        }
+        else {
+            cout<<-1<<endl;
+        }
+    }
+    return;
 }
 
 int main()

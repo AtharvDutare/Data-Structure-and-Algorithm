@@ -50,19 +50,71 @@ void no() { cout<<"NO\n"; }
 
 void solve()
 {
-    int n;
-	cin >> n;
-	string s;
-	cin >> s;
-	set<char> st;
-	int ans=0;
-	for(int i=0;i<n;i++) {
-		st.insert(s[i]);
-		ans+=st.size();
-	}
-	cout<<ans<<endl;
- 
-     
+    ll n,k;
+    cin>>n>>k;
+    // set<ll,greater<ll>> q;
+    // q.insert(k);
+    // int ans=0;
+    // if(k==n) {
+    //     cout<<ans<<endl;
+    //     return;
+    // }
+    
+    // while(q.size()>0) {
+    //     ans++;
+    //     int k=q.size();
+    //     int turn=0;
+    //     while(k--) {
+    //         turn++;
+    //         ll t=*q.begin();
+    //         q.erase(q.begin());
+    //         ll x=2*t;
+    //         ll y=2*t-1;
+    //         ll z=2*t+1;
+    //         if(x==n||y==n||z==n) {
+    //             cout<<ans<<endl;
+    //             return;
+    //         }
+    //         //cout<<x<<" "<<y<<endl;
+    //         if(x<n) {
+    //             q.insert(x);
+    //         }
+    //         if(y<n) {
+    //             q.insert(y);
+    //         }
+    //         if(z<n) {
+    //             q.insert(z);
+    //         }
+    //         if(turn>40) {
+    //             cout<<q.size()<<" "<<turn<<endl;
+    //             assert(ans>40);
+
+    //         }
+                
+    //     }
+        
+    // }
+    // cout<<-1<<endl;
+
+    int l=n;
+    int r=n;
+    int ans=0;
+    if(l==k||r==k) {
+        cout<<0<<endl;
+        return;
+    }
+    while(r!=1) {
+        if(l<=k&&k<=r) break;//
+        l=floor(l*1.0/2);
+        r=ceil(r*1.0/2);
+        ans++;
+    }
+    if(l==k||r==k) {
+        cout<<ans<<endl;
+    }
+    else {
+        cout<<-1<<endl;
+    }
 }
 
 int main()

@@ -51,18 +51,12 @@ void no() { cout<<"NO\n"; }
 void solve()
 {
     int n;
-	cin >> n;
-	string s;
-	cin >> s;
-	set<char> st;
-	int ans=0;
-	for(int i=0;i<n;i++) {
-		st.insert(s[i]);
-		ans+=st.size();
-	}
-	cout<<ans<<endl;
- 
-     
+    cin>>n;
+    vi arr(n);
+    for(int i=0;i<n;i++) {
+        cin>>arr[i];
+    }
+    
 }
 
 int main()
