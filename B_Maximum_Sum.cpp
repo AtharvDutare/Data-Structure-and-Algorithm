@@ -50,38 +50,59 @@ void no() { cout<<"NO\n"; }
 
 void solve()
 {
-    int n;
-    cin>>n;
-    vi arr(n);
+    int n,k;
+    cin>>n>>k;
+    vll arr(n);
     for(int i=0;i<n;i++) {
         cin>>arr[i];
     }
-    ll ans=INT_MIN;
-    ll sum=0;
-    int i=0;
-    int j=0;
-    while(j<n) {
-        if(sum<0) {
-            sum=0;
-            i=j;
-        }
-        if(i<j) {
-            if((arr[j]^arr[j-1])&1) {
-                sum+=arr[j];
-            }
-            else {
-                sum=arr[j];
-            }
-        }
-        else {
-            sum=arr[j];
-        }
-        ans=max(ans,sum);
-        j++;
+    // multiset<ll> st;
+    // for(ll i=0;i<n;i++) {
+    //     st.insert(arr[i]);
+    // }
+    // //cout<<"size of mulitset:- "<<st.size()<<endl;
+    // while(k--) {
+    //     ll p=INT_MAX;
+    //     ll q=INT_MAX;
+    //     //cout<<"size of mulitset:- "<<st.size()<<endl;
+    //     if(st.size()>1) {
+    //         //assert("eheih");
+    //         ll a=*st.begin();
+    //         ll b=*(next(st.begin()));
+    //         //cout<<a<<" "<<b<<endl;
+    //         p=a+b;
+    //     }
+    //     q=*prev(st.end());
+    //     //cout<<p<<" "<<q<<endl;
+    //     if(p>q) {
+    //         st.erase(prev(st.end()));
+    //     }
+    //     else {
+    //         st.erase(st.begin());
+    //         st.erase(st.begin());
+    //     }
+    // }
+    // ll ans=0;
+    // for(auto it=st.begin();it!=st.end();it=next(it)) {
+    //     ans+=*it;
+    // }
+    // cout<<ans<<endl;
+    sort(all(arr));
+    vector<ll> pre(n+1);
+   // pre[0]=arr[0];
+    for(ll i=0;i<n;i++) {
+        pre[i+1]=pre[i]+arr[i];
+    }
+    ll ans=0;
+    for(ll i=0;i<=k;i++) {
+        ll left=2*(i);
+        ll right=(n)-(k-(i));
+        ans=max(ans,pre[right]-pre[left]);
     }
     cout<<ans<<endl;
-    
+
 }
+
 
 int main()
 {

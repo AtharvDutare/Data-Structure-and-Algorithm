@@ -50,37 +50,22 @@ void no() { cout<<"NO\n"; }
 
 void solve()
 {
-    int n;
-    cin>>n;
-    vi arr(n);
-    for(int i=0;i<n;i++) {
-        cin>>arr[i];
+    ll n,k,a,b;
+    cin>>n>>k>>a>>b;
+    vector<pll> v(n+1);
+    for(int i=1;i<=n;i++) {
+        ll x,y;
+        cin>>x>>y;
+        v[i]={x,y};
     }
-    ll ans=INT_MIN;
-    ll sum=0;
-    int i=0;
-    int j=0;
-    while(j<n) {
-        if(sum<0) {
-            sum=0;
-            i=j;
-        }
-        if(i<j) {
-            if((arr[j]^arr[j-1])&1) {
-                sum+=arr[j];
-            }
-            else {
-                sum=arr[j];
-            }
-        }
-        else {
-            sum=arr[j];
-        }
-        ans=max(ans,sum);
-        j++;
+    ll directRoute=abs(v[a].first-v[b].first)+abs(v[a].second-v[b].second);
+    ll mins=2e18,mind=2e18;
+    for(int i=1;i<=k;i++) {
+        mins=min(mins,abs(v[a].first-v[i].first)+abs(v[a].second-v[i].second));
+        mind=min(mind,abs(v[b].first-v[i].first)+abs(v[b].second-v[i].second));
+        //assert(mins<0||mind<0);
     }
-    cout<<ans<<endl;
-    
+    cout<<min(directRoute,mins+mind)<<endl;
 }
 
 int main()

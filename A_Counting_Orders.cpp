@@ -48,39 +48,34 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
+
 void solve()
 {
-    int n;
+    ll n;
     cin>>n;
-    vi arr(n);
+    vll a(n),b(n);
     for(int i=0;i<n;i++) {
-        cin>>arr[i];
+        cin>>a[i];
     }
-    ll ans=INT_MIN;
-    ll sum=0;
-    int i=0;
-    int j=0;
-    while(j<n) {
-        if(sum<0) {
-            sum=0;
-            i=j;
+    for(int i=0;i<n;i++) {
+        cin>>b[i];
+    }
+    sort(all(a));
+    sort(all(b));
+    reverse(all(b));
+    vector<ll> pro(n);
+    for(int i=0;i<n;i++) {
+        int ele=b[i];
+        pro[i]=a.end()-lower_bound(all(a),ele+1);
+    }
+    ll ans=1;
+    for(int i=0;i<pro.size();i++) {
+        ans=(ans%MOD*((pro[i]-i)%MOD))%MOD;
+        if(ans<=0) {
+            break;
         }
-        if(i<j) {
-            if((arr[j]^arr[j-1])&1) {
-                sum+=arr[j];
-            }
-            else {
-                sum=arr[j];
-            }
-        }
-        else {
-            sum=arr[j];
-        }
-        ans=max(ans,sum);
-        j++;
     }
     cout<<ans<<endl;
-    
 }
 
 int main()

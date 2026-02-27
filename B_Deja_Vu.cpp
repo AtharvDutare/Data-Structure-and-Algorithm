@@ -50,37 +50,29 @@ void no() { cout<<"NO\n"; }
 
 void solve()
 {
-    int n;
-    cin>>n;
-    vi arr(n);
-    for(int i=0;i<n;i++) {
-        cin>>arr[i];
+    ll n,d;
+    cin>>n>>d;
+    vll a(n),b(d);
+    for(int i=0;i<n;i++){
+        cin>>a[i];
     }
-    ll ans=INT_MIN;
-    ll sum=0;
-    int i=0;
-    int j=0;
-    while(j<n) {
-        if(sum<0) {
-            sum=0;
-            i=j;
-        }
-        if(i<j) {
-            if((arr[j]^arr[j-1])&1) {
-                sum+=arr[j];
-            }
-            else {
-                sum=arr[j];
+    for(int i=0;i<d;i++) {
+        cin>>b[i];
+    }
+    int prev=31;
+    for(int i=0;i<d;i++) {
+        if(b[i]>=prev) continue;
+        //ll di=pow(2,b[i]);
+        ll di=1<<b[i];
+        for(int j=0;j<n;j++) {
+            if(a[j]%di==0) {
+                a[j]+=di/2;
             }
         }
-        else {
-            sum=arr[j];
-        }
-        ans=max(ans,sum);
-        j++;
+        prev=b[i];
     }
-    cout<<ans<<endl;
-    
+    print_v(a);
+
 }
 
 int main()

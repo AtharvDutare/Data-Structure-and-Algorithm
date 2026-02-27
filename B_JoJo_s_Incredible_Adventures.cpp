@@ -46,41 +46,55 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on
+
+    we use two vector of prev and curr
+        by using prev we construct the curr array 
+        this array store the contigous 1's on vertical space 
+
+        after calculate the curr find the maximum rectangle 
+        by iterate the current vector 
+            i=0 and j=0
+                while(i==j) j++
+                else ans=max(ans,(j-1)*curr[i])
+                        i=j
+
+
+*/
 
 void solve()
 {
-    int n;
-    cin>>n;
-    vi arr(n);
+    string s;
+    cin>>s;
+    //cout<<s<<endl;
+    int n=s.length();
+    int ans=0;
+    vector<int> prev(n,0);
     for(int i=0;i<n;i++) {
-        cin>>arr[i];
-    }
-    ll ans=INT_MIN;
-    ll sum=0;
-    int i=0;
-    int j=0;
-    while(j<n) {
-        if(sum<0) {
-            sum=0;
-            i=j;
-        }
-        if(i<j) {
-            if((arr[j]^arr[j-1])&1) {
-                sum+=arr[j];
+        for(int w=0;w<n;w++) {
+            if(s[w]=='0') {
+                prev[w]=0;
             }
             else {
-                sum=arr[j];
+                prev[w]++;
             }
         }
-        else {
-            sum=arr[j];
+        int j=0;
+        int k=0;
+        while(k<n) {
+            if(prev[j]!=prev[k]) {
+                ans=max((k-j)*prev[j],ans);
+                //cout<<j<<" "<<k<<" "<<(k-j)*prev[j]<<" row is "<<i<<endl;
+                j=k;
+            }   
+            k++;
         }
-        ans=max(ans,sum);
-        j++;
+        //cout<<j<<" "<<k<<" "<<(k-j)*prev[j]<<" row is "<<i<<endl;
+        ans=max((k-j)*prev[j],ans);
+        //cout<<s<<endl;
+        rotate(s.rbegin(), s.rbegin() + 1, s.rend());
     }
     cout<<ans<<endl;
-    
 }
 
 int main()

@@ -48,40 +48,49 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
+//#define ll ll
+
+
+
+ll can(vll &arr,ll ele,ll c) {
+    ll n=arr.size();
+    ll ans=0;
+    for(ll i=0;i<n;i++) {
+        if(ans<0||ans>c) {
+            return LLONG_MAX;
+        }
+        ans+=(arr[i]+1LL*ele*2)*(arr[i]+1LL*ele*2);
+    }
+    //cout<<ans<<" can"<<endl;
+    return ans<0?LLONG_MAX:ans;
+}
+
 void solve()
 {
-    int n;
-    cin>>n;
-    vi arr(n);
-    for(int i=0;i<n;i++) {
+    ll n,c;
+    cin>>n>>c;
+    vll arr(n);
+    for(ll i=0;i<n;i++) {
         cin>>arr[i];
     }
-    ll ans=INT_MIN;
-    ll sum=0;
-    int i=0;
-    int j=0;
-    while(j<n) {
-        if(sum<0) {
-            sum=0;
-            i=j;
-        }
-        if(i<j) {
-            if((arr[j]^arr[j-1])&1) {
-                sum+=arr[j];
-            }
-            else {
-                sum=arr[j];
-            }
+    ll s=1;
+    ll e=1e9;
+    ll ans=0;
+    while(s<=e) {
+        ll mid=(e-s)/2+s;
+        ll tempAns=can(arr,mid,c);
+        if(c>=tempAns) {
+            //cout<<tempAns<<" "<<mid<<endl;
+            ans=max(ans,mid);
+            s=mid+1;
         }
         else {
-            sum=arr[j];
+            e=mid-1;
         }
-        ans=max(ans,sum);
-        j++;
     }
     cout<<ans<<endl;
-    
 }
+
 
 int main()
 {

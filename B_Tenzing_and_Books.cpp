@@ -50,38 +50,54 @@ void no() { cout<<"NO\n"; }
 
 void solve()
 {
-    int n;
-    cin>>n;
-    vi arr(n);
+    int n,x;
+    cin>>n>>x;
+    queue<int> a,b,c;
     for(int i=0;i<n;i++) {
-        cin>>arr[i];
+        int x;
+        cin>>x;
+        a.push(x);
     }
-    ll ans=INT_MIN;
-    ll sum=0;
-    int i=0;
-    int j=0;
-    while(j<n) {
-        if(sum<0) {
-            sum=0;
-            i=j;
+    for(int i=0;i<n;i++) {
+        int x;
+        cin>>x;
+        b.push(x);
+    }
+    for(int i=0;i<n;i++) {
+        int x;
+        cin>>x;
+        c.push(x);
+    }
+    int k=0;
+    int t=true;
+    while(t) {
+        if(k==x) {
+            yes();
+            return;
         }
-        if(i<j) {
-            if((arr[j]^arr[j-1])&1) {
-                sum+=arr[j];
-            }
-            else {
-                sum=arr[j];
-            }
+        else if((a.size()>0)&&(x | a.front()) == x) {
+            int w=a.front();
+            a.pop();
+            k=k|w;
+        }
+        else if((b.size()>0)&&(x | b.front()) == x) {
+            int w=b.front();
+            b.pop();
+            k=k|w;
+        }
+        else if((c.size()>0)&&(x | c.front()) == x) {
+            int w=c.front();
+            c.pop();
+            k=k|w;
         }
         else {
-            sum=arr[j];
+            t=false;
         }
-        ans=max(ans,sum);
-        j++;
     }
-    cout<<ans<<endl;
-    
+   // cout<<k<<endl;
+    no();
 }
+
 
 int main()
 {

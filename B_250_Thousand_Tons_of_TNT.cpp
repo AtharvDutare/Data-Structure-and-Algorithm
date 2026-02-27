@@ -48,39 +48,81 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
+vector<long long> getAllDivisors(long long n) {
+    vector<long long> divisors;
+    
+    // Iterate to the square root of n
+    for (long long i = 1; i * i <= n; i++) {
+        if (n % i == 0) {
+            divisors.push_back(i); // The smaller divisor
+            
+            // If the divisors are different, add the larger one
+            if (i * i != n) {
+                divisors.push_back(n / i);
+            }
+        }
+    }
+    
+    // Optional: Sort them for clear output
+    sort(divisors.begin(), divisors.end());
+    return divisors;
+}
+ll solve(vll &arr,int k) {
+    int n=arr.size();
+    ll ans1=LLONG_MIN;
+    ll ans2=LLONG_MAX;
+    for(int i=0;i<n;i+=k) {
+        ll tempAns=0;
+        int j;
+        for(j=0;j<k;j++) {
+            tempAns+=arr[j+i];
+        }
+        // if(tempAns==0) {
+        //     cout<<i<<" "<<j<<endl;
+        //     assert("error");
+        // }
+        ans1=max(tempAns,ans1);
+        ans2=min(tempAns,ans2);
+    }
+   // cout<<k<<" "<<ans1<<" "<<ans2<<endl;
+    return ans1-ans2;
+}
+
 void solve()
 {
     int n;
     cin>>n;
-    vi arr(n);
-    for(int i=0;i<n;i++) {
+    vll arr(n);
+    f(i,0,n) {
         cin>>arr[i];
     }
-    ll ans=INT_MIN;
-    ll sum=0;
-    int i=0;
-    int j=0;
-    while(j<n) {
-        if(sum<0) {
-            sum=0;
-            i=j;
-        }
-        if(i<j) {
-            if((arr[j]^arr[j-1])&1) {
-                sum+=arr[j];
-            }
-            else {
-                sum=arr[j];
-            }
-        }
-        else {
-            sum=arr[j];
-        }
-        ans=max(ans,sum);
-        j++;
+    //sort(all(arr));
+    vector<ll> d=getAllDivisors(n);
+    ll ans=0;
+    //print_v(d);
+    // ll s=0;
+    // ll e=d.size()-1;
+    // while(s<=e) {
+    //     ll mid=(e-s)/2+s;
+    //     ll tempAns=solve(arr,d[mid]);
+    //     if(ans<=tempAns) {
+    //         s=mid+1;
+            
+    //     }
+    //     else {
+    //         e=mid-1;
+    //     }
+    //     cout<<tempAns<<endl;
+    //     ans=max(ans,tempAns);
+    // }
+
+    for(int i=0;i<d.size();i++) {
+        ll tempAns=solve(arr,d[i]);
+        //cout<<tempAns<<endl;
+        ans=max(ans,tempAns);
     }
     cout<<ans<<endl;
-    
+
 }
 
 int main()
