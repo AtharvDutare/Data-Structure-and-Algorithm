@@ -46,47 +46,66 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
 
 
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
+    BRUTE FORCE SOLUTON
+        find the total divisors of n 
+            ONE BY ONE CHECK 
+                ans=max(ans,gcd);
+        O(n*sqrt(n))
+            IT SAY K SEGMENT NOT EQUAL SUBARRAY 
 
+
+
+        RIGHT INTIUTION
+
+        LETS SAY WE have K segment 
+        so....
+        gcd(b1,b2,...bk)<=gcd(b1+b2,b3+b4,...bk-1+bk)
+        why????
+            let say for k segment gcd is w
+            then for all segment it is w 
+                FORM B1+B2 IS W*(Y1+Y2) 
+                SO ATMOST GCD IS W it can increasce by y1+y2 maybe or
+                maybe not 
+
+
+
+*/
+
+// vector<long long> getAllDivisors(long long n) {
+//     vector<long long> divisors;
+//     //divisors.pb(1);
+//     for(long long i=1;i*i<=n;i++){
+//         if(n%i==0){
+//             divisors.push_back(i);
+//             if(i*i!=n){
+//                 divisors.push_back(n/i);
+//             }
+//         }
+//     }
+//     sort(divisors.begin(),divisors.end());
+//     return divisors;
+// }
 
 void solve()
 {
     ll n;
     cin>>n;
-    vll a(n),b(n),c(n);
+    vll arr(n);
     for(int i=0;i<n;i++) {
-        cin>>a[i];
+        cin>>arr[i];
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
+    ll sum=accumulate(all(arr),0LL);
+    ll ans=0;
+    ll pre=0;
+    for(int i=0;i<n-1;i++) {
+        pre+=arr[i];
+        ans=max(ans,gcd(pre,sum-pre));
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
-    }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
+    cout<<ans<<endl;
+
 }
 
 int main()

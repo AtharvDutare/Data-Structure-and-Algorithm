@@ -26,6 +26,43 @@ using namespace std;
 template <class T>
 void print_v(vector<T> &v) { for (auto x : v) cout << x << " "; cout << endl; }
 
+
+// 1. For most containers (Vector, Set, List)
+template <typename T>
+void print(const T& container) {
+    cout << "[ ";
+    for (auto it = container.begin(); it != container.end(); ++it) {
+        cout << *it;
+        auto next_it = it;
+        if (++next_it != container.end()) cout << ", ";
+    }
+    cout << " ]" << endl;
+}
+
+// 2. Overload for Maps (Old Syntax)
+template <typename K, typename V>
+void print(const map<K, V>& m) {
+    cout << "{ ";
+    for (auto it = m.begin(); it != m.end(); ++it) {
+        cout << it->first << ":" << it->second;
+        auto next_it = it;
+        if (++next_it != m.end()) cout << ", ";
+    }
+    cout << " }" << endl;
+}
+
+// 3. Overload for Queues (Adapters)
+template <typename T>
+void print(queue<T> q) { 
+    cout << "q[ ";
+    while(!q.empty()){
+        cout << q.front();
+        q.pop();
+        if(!q.empty()) cout << ", ";
+    }
+    cout << " ]" << endl;
+}
+
 /* UTILS */
 #define MOD 1000000007
 #define PI 3.1415926535897932384626433832795
@@ -34,6 +71,9 @@ ll lcm(ll a,ll b) { return (a*b)/gcd(a,b); }
 string to_upper(string a) { for (int i=0;i<(int)a.size();++i) if (a[i]>='a' && a[i]<='z') a[i]-='a'-'A'; return a; }
 string to_lower(string a) { for (int i=0;i<(int)a.size();++i) if (a[i]>='A' && a[i]<='Z') a[i]+='a'-'A'; return a; }
 bool prime(ll a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a%i==0) return 0; return 1; }
+
+static mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int RD = rng() & ((1 << 31) - 1);
 
 //fast exponanation
 ll power(int a,int b){
@@ -48,46 +88,33 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
-
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
-
-
 void solve()
 {
-    ll n;
-    cin>>n;
-    vll a(n),b(n),c(n);
-    for(int i=0;i<n;i++) {
-        cin>>a[i];
+    ll n,k;
+    cin>>n>>k;
+    vll arr(n);
+    f(i,0,n) {
+        cin>>arr[i];
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
+    k--;
+    ll curr=arr[k];
+    ll time=0;
+    ll level=1;
+    sort(all(arr));
+    for(ll i=0;i<n;i++) {
+        if(arr[i]<curr) continue;
+        if(curr<level+(arr[i]-curr)-1) {
+            no();
+            return;
+        }
+        level+=(arr[i]-curr);
+        curr=arr[i];
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
-    }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
+    yes();
+ 
+
 }
+
 
 int main()
 {

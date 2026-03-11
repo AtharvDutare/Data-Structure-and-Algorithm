@@ -46,47 +46,43 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
+
+    (a,b)
+    find k such that b%k==0;
+    
+    and then find max(a*k+b/k) which is even
+
+    BRUTE FORCE
+
+    find divisible of b 
+    and one by one find the max value 
+        BUT A*B<=10^18 THEN B CAN BE 10^18
 
 
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
-
+*/
 
 void solve()
 {
-    ll n;
-    cin>>n;
-    vll a(n),b(n),c(n);
-    for(int i=0;i<n;i++) {
-        cin>>a[i];
+    ll a,b;
+    cin>>a>>b;
+    if(b%2) {
+        if(a%2) {
+            cout<<(a*b)+1<<endl;
+            return;
+        }
+        else {
+            cout<<-1<<endl;
+            return;
+        }
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
+    ll ans=a*b/2+2;
+    if(ans%2) {
+        cout<<-1<<endl;
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
+    else {
+        cout<<ans<<endl;
     }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
 }
 
 int main()

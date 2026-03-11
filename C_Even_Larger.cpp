@@ -48,45 +48,33 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
-
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
-
-
 void solve()
 {
     ll n;
     cin>>n;
-    vll a(n),b(n),c(n);
-    for(int i=0;i<n;i++) {
-        cin>>a[i];
+    vll arr(n+1);
+    f(i,1,n+1) {
+        cin>>arr[i];
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
+    ll ans=0;
+    if(arr[1]>arr[2]) {
+        ans+=(arr[1]-arr[2]);
+        arr[1]=arr[2];
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
+    for(int i=3;i<=n;i+=2) {
+        ll x=arr[i-1]-arr[i-2];
+        if(i+1<=n) {
+            if(arr[i]>arr[i+1]) {
+                x=min(x,arr[i+1]);
+            }
+        }
+        if(arr[i]>x) {
+            ans+=arr[i]-x;
+            arr[i]=x;
+        }  
+        
     }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
+    cout<<ans<<endl;
 }
 
 int main()

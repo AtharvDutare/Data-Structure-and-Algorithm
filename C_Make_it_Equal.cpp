@@ -48,47 +48,87 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
-
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
-
-
 void solve()
 {
-    ll n;
-    cin>>n;
-    vll a(n),b(n),c(n);
-    for(int i=0;i<n;i++) {
-        cin>>a[i];
+    ll n,k;
+    cin>>n>>k;
+    map<ll,ll> mp;
+    f(i,0,n) {
+        int x;
+        cin>>x;
+        mp[x%k]++;
+        mp[k-x%k]++;
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
+    f(i,0,n) {
+        int x;
+        cin>>x;
+        mp[x%k]--;
+        mp[k-x%k]--;
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
-    }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
-}
 
+    for(auto &it:mp) {
+        if(it.second){
+            no();
+            return;
+        }
+    }
+    yes();
+
+
+
+    // multiset<ll> m;
+    // for(auto &x:s) {
+    //     if(t.find(x)!=t.end()) {
+    //         t.erase(t.find(x));
+    //     }
+    //     else {
+    //         m.insert(x);
+    //     }
+    // }
+    // cout<<m.size()<<" "<<t.size()<<endl;
+    // if(t.size()==0) {
+    //     yes();
+    //     return;
+    // }
+    // int minRange=*t.begin();
+    // int maxRange=*prev(t.end());
+    // cout<<minRange<<" "<<maxRange<<endl;
+    // for(auto &x:m) {
+    //     int t1=x;
+    //     int t2=x;
+    //     bool isFind=false;
+    //     while(t2<=maxRange) {
+    //         if(t.find(t2)!=t.end()) {
+    //             t.erase(t.find(t2));
+    //             isFind=true;
+    //             break;
+    //         }
+    //         t2+=k;
+    //     }
+    //     if(isFind) {
+    //         continue;
+    //     }
+    //     while(t1>=minRange) {
+    //         if(t.find(t1)!=t.end()) {
+    //             t.erase(t.find(t1));
+    //             isFind=true;
+    //             break;
+    //         }
+    //         //cout<<t1<<endl;
+    //         t1=abs(t1-k);
+    //     }
+    //     if(isFind==false) {
+    //         no();
+    //         return;
+    //     }
+    // }
+    // if(t.size()==0) {
+    //     yes();
+    // }
+    // else {
+    //     no();
+    // }
+}
 int main()
 {
     ios::sync_with_stdio(false);

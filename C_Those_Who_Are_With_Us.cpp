@@ -35,6 +35,9 @@ string to_upper(string a) { for (int i=0;i<(int)a.size();++i) if (a[i]>='a' && a
 string to_lower(string a) { for (int i=0;i<(int)a.size();++i) if (a[i]>='A' && a[i]<='Z') a[i]+='a'-'A'; return a; }
 bool prime(ll a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a%i==0) return 0; return 1; }
 
+static mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int RD = rng() & ((1 << 31) - 1);
+
 //fast exponanation
 ll power(int a,int b){
     if(!b) return 1;
@@ -48,45 +51,41 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
-
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
-
-
 void solve()
 {
-    ll n;
-    cin>>n;
-    vll a(n),b(n),c(n);
+    ll n,m;
+    cin>>n>>m;
+    int totalSum=0;
+    vector<vector<int>> mat(n,vector<int>(m,0));
     for(int i=0;i<n;i++) {
-        cin>>a[i];
+        for(int j=0;j<m;j++) {
+            cin>>mat[i][j];
+            totalSum+=mat[i][j];
+        }
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
+    vector<int>row(n),col(m);
+    f(i,0,n) {
+        int sum=0;
+        f(j,0,m) {
+            sum+=mat[i][j];
+        }
+        row[i]=sum;
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
+    f(j,0,m) {
+        int sum=0;
+        f(i,0,n) {
+            sum+=mat[i][j];
+        }
+        col[j]=sum;
     }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
+    int ans=totalSum;
+    f(i,0,n) {
+        f(j,0,m) {
+            ans=min(ans,totalSum-row[i]-col[j]+mat[i][j]);
+        }
     }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
+    cout<<ans<<endl;
+
 }
 
 int main()

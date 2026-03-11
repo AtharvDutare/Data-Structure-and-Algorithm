@@ -48,45 +48,97 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
-
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
-
-
 void solve()
 {
     ll n;
     cin>>n;
-    vll a(n),b(n),c(n);
-    for(int i=0;i<n;i++) {
-        cin>>a[i];
+    vi arr(2*n);
+    f(i,0,2*n) {
+        cin>>arr[i];
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
+    map<int,int> mp;
+    for(int i=0;i<2*n;i++) {
+        mp[arr[i]]++;
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
+    int ans=0;
+    // alway in even because 2*n is even
+    int oddFreq=0;
+    for(auto &t:mp) {
+        int x=t.first;
+        int y=t.second;
+        if(y&1) {
+            ans++;
+            oddFreq++;
+        }
     }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
+
+    // count of element which freq is multiple of 4
+    int cnt=0;
+    for(auto &t:mp) {
+        int x=t.first;
+        int y=t.second;
+        if(y&1^1) {
+            if(y&2) {
+                ans+=2;
+            }
+            else {
+                cnt++;
+            }
+        }
     }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
+    if(oddFreq<2) {
+        ans=ans+2*(cnt-cnt%2);
     }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
+    else {
+        ans=ans+2*cnt;
+    }
+    cout<<ans<<endl;
+
+
+
+    // unordered_map<int,int> mp;
+    // f(i,0,2*n) {
+    //     mp[arr[i]]++;
+    // }
+    // if(mp.size()==1) {
+    //     if(n%2==1) {
+    //         cout<<2<<endl;
+    //     }
+    //     else {
+    //         cout<<0<<endl;
+    //     }
+    //     return;
+    // }
+    // int p=n,q=n;
+    // int ans=0;
+    // for(auto &x:mp) {
+    //     if(x.second%2==1) {
+    //         if(p<q) {
+    //             p-=x.second;
+    //             ans++;
+    //         }
+    //         else {
+    //             q-=x.second;
+    //             ans++;
+    //         }
+    //     }
+    //     else {
+    //         double f=x.second;
+    //         int t1=ceil((f-1)/2);
+    //         int t2=floor((f+1)/2);
+    //         if(p<q) {
+    //             p-=t2;
+    //             q-=t1;
+    //         }
+    //         else {
+    //             p-=t1;
+    //             q-=t2;
+    //         }
+    //         ans+=2;
+    //     }
+    // }
+    // cout<<p<<" "<<q<<endl;
+    // cout<<ans<<endl;
 }
 
 int main()

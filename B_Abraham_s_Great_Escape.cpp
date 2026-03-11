@@ -48,45 +48,60 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
-
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
-
-
 void solve()
 {
-    ll n;
-    cin>>n;
-    vll a(n),b(n),c(n);
+    int n,k;
+    cin>>n>>k;
+    if(k==(n*n-1)) {
+        no();
+        return;
+    } 
+    if(k==n*n) {
+        yes();
+        for(int i=0;i<n;i++) {
+            for(int j=0;j<n;j++) {
+                cout<<'U';
+            }cout<<endl;
+        }
+        return;
+    }
+    vector<vector<char>> mat(n,vector<char>(n,'D'));
+    int t=n*n-k;
+    mat[0][0]='R';
+    mat[0][1]='L';
+    t-=2;
+    for(int i=2;i<n;i++) {
+        if(t<=0) {
+            break;
+        }
+        if(t>0) {
+            mat[0][i]='L';
+        }
+        t--;
+    }
+    int x=1;
+    int y=0;
+    for(x=1;x<n;x++) {
+        for(y=0;y<n;y++) {
+            if(t<=0) {
+                break;
+            }
+            if(t>0) {
+                mat[x][y]='U';
+            }
+            t--;
+        }
+        if(t<=0) {
+            break;
+        }
+    }
+    yes();
     for(int i=0;i<n;i++) {
-        cin>>a[i];
+        for(int j=0;j<n;j++) {
+            cout<<mat[i][j];
+        }
+        cout<<endl;
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
-    }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
-    }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
 }
 
 int main()

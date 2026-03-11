@@ -46,47 +46,73 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
 
+    INTIUTION
 
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
+    if single character then yes
+    if any adjecent 2 same element then no
+
+    we want to create a data structure which store the frequency (key,value)
+    but sorted by value and we can retrive the first and last element
+    using this we can create a sliding window 
+
+    experiment code
+    set<pair<char,int>> st;
+    string s="afadffdfdfdfdffdfdddd";
     for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
+    
+    }
+
+    int i=-1;
+    int j=-1;
+    while(i<n) {
+        i++;
+        ds.increaseFreq(s[i]);
+        if(ds.back().freq>=2) {
+            //remove the element and find ele with freq 0
+            while(j<i) {
+                j++;
+                ds.reduceFreq(s[j]);
+                if(ds.back().freq>=2&&ds.freq[s[j]]==0) {
+                    no();
+                }
+                
+            }
+        }
+        
+    }
+
+    // last window 
+
+    while(j<i) {
+        j++;
+        ds.reduceFreq(s[j]);
+        if(ds.back().freq>=2&&ds.freq[s[j]]==0) {
+            no();
         }
     }
-    //cout<<"athrv"<<endl;
-    return true;
-}
-
+    yes();
+*/
 
 void solve()
 {
-    ll n;
-    cin>>n;
-    vll a(n),b(n),c(n);
+    string s;
+    cin>>s;
+    int n=s.length();
+    set<char> st;
     for(int i=0;i<n;i++) {
-        cin>>a[i];
+        st.insert(s[i]);
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
+    int k=st.size();
+    for(int i=k;i<n;i++) {
+        if(s[i]!=s[i-k]) {
+            no();
+            return;
+        }
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
-    }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
+    yes();
+
 }
 
 int main()

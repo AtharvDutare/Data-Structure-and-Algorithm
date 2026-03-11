@@ -46,47 +46,49 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
+    
+
+    INTIUTION
+        perform exactly n operations
 
 
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
+    
 
+*/
 
 void solve()
 {
-    ll n;
+    int n;
     cin>>n;
-    vll a(n),b(n),c(n);
+    vi arr(n);
+    f(i,0,n) {
+        cin>>arr[i];
+    }
+
+    sort(arr.begin(),arr.end());
+    int no=-1;
     for(int i=0;i<n;i++) {
-        cin>>a[i];
+        if(arr[i]) {
+            no=i;
+            break;
+        }
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
+    if(no==-1) {
+        cout<<0<<endl;
+        return;
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
+    ll t=0;
+    for(int i=no;i<n;i++) {
+        t+=(arr[i]-1);
     }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
+    if(t-n>=0) {
+        t=0;
     }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
+    else {
+        t=t-n+1;
     }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
+    cout<<n-no+t<<endl;
 }
 
 int main()

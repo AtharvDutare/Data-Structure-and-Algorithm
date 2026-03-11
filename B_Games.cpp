@@ -46,47 +46,39 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
 
 
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
+They share at least one game in common between their lists.
 
+
+
+*/
 
 void solve()
 {
-    ll n;
-    cin>>n;
-    vll a(n),b(n),c(n);
-    for(int i=0;i<n;i++) {
+    ll n,m;
+    cin>>n>>m;
+    vll a(n),b(m);
+    f(i,0,n) {
         cin>>a[i];
     }
-    for(int i=0;i<n;i++) {
+    f(i,0,m) {
         cin>>b[i];
     }
+    int k=0;
     for(int i=0;i<n;i++) {
-        cin>>c[i];
+        if(find(all(b),a[i])!=b.end()) {
+            k++;
+        }
     }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
+    if(n>m) {
+        cout<<2*(m-k)+2<<endl;
     }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
+    else {
+        cout<<2*(n-k)+1<<endl;
     }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
+
 }
 
 int main()

@@ -48,44 +48,29 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
-
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
-
-
 void solve()
 {
     ll n;
     cin>>n;
-    vll a(n),b(n),c(n);
-    for(int i=0;i<n;i++) {
-        cin>>a[i];
-    }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
-    }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
-    }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
+    // vector<vector<int>> temp(n+1,vector<int>(n+1,0));
+    // for(int i=1;i<=n;i++) {
+    //     for(int j=1;j<=n;j++) {
+    //         temp[i][j]=i*j;
+    //     }
+    // }
+
+    // for(int i=1;i<=n;i++) {
+    //     for(int j=1;j<=n;j++) {
+    //         cout<<temp[i][j]<<" ";
+    //     }cout<<endl;
+    // }
+    
+    //ll ans=((2*((n*(n+1))%MOD/2))%MOD-1-n)%MOD;
+
+    //cout<<ans<<endl;
+
+    ll ans=((((n*(n+1))%MOD)*(4*n-1))%MOD*337)%MOD;
+    cout<<ans<<endl;
     
 }
 

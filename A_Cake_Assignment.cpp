@@ -46,47 +46,64 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
+
+    {2^k,2^k}
+        |
+    to this
+    (x,2^k-x)
+    C  ,V
+
+In one step, they can perform exactly one of the following two operations:
+
+Chocola gives half of her cakes to Vanilla
+. This operation is only allowed if Chocola currently has an even number of cakes.
 
 
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
+Vanilla gives half of her cakes to Chocola
+. This operation is only allowed if Vanilla currently has an even number of cakes.
+
+    equal 0
+
+    if(p>t){
+        2^k-x>2K
+        additon on second bag
+        p-t
+        int k=p-t;
+        int oneSide=t;
+        while(k>0) {
+            t=t/2;
+            k-=t;
         }
     }
-    //cout<<"athrv"<<endl;
-    return true;
-}
+    else {
+    // t<p
+        2^k-x<2K
+        reduction on second bag
 
+
+    }
+
+*/
 
 void solve()
 {
-    ll n;
-    cin>>n;
-    vll a(n),b(n),c(n);
-    for(int i=0;i<n;i++) {
-        cin>>a[i];
+    ll k,x;
+    cin>>k>>x;
+    vector<int> o;
+    while(x!=(1LL<<k)) {
+        if(x<(1LL<<k)) {
+            o.pb(1);
+            x=2*x;
+        }
+        else {
+            o.pb(2);
+            x=2*x-(1LL<<(k+1));
+        }
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
-    }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
-    }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
+    reverse(all(o));
+    cout<<o.size()<<endl;
+    print_v(o);
 }
 
 int main()

@@ -49,44 +49,42 @@ void no() { cout<<"NO\n"; }
 /* clang-format on */
 
 
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
+int mm(int i,vector<int>&arr,vector<int>ind[],vector<int>&m,vector<int>&dp) {
+    if(i==arr.size()) {
+        return 0;
     }
-    //cout<<"athrv"<<endl;
-    return true;
+    if(dp[i]!=-1) {
+        return dp[i];
+    }
+    int ans=mm(i+1,arr,ind,m,dp);
+    int curr=arr[i];
+    int at=m[i];
+    if(curr-1+at<ind[curr].size()) {
+        ans=max(ans,mm(ind[curr][curr+at-1]+1,arr,ind,m,dp)+arr[i]);
+    }
+    return dp[i]=ans;
 }
-
 
 void solve()
 {
-    ll n;
+    int n;
     cin>>n;
-    vll a(n),b(n),c(n);
-    for(int i=0;i<n;i++) {
-        cin>>a[i];
+    vi arr(n);
+    f(i,0,n) {
+        cin>>arr[i];
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
+
+    // it is a array of array which store the indices of same element in array 
+    vector<int> ind[n+1];
+    //for each index in arr it store the index in that ind 
+    vector<int> m(n);
+    vector<int> dp(n+1,-1);
+    f(i,0,n) {
+        ind[arr[i]].pb(i);
+        m[i]=ind[arr[i]].size()-1;
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
-    }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
+    int ans=mm(0,arr,ind,m,dp);
+    cout<<ans<<endl;
 }
 
 int main()

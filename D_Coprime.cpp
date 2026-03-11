@@ -46,46 +46,42 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
 
+    INTIUTION
 
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
+        1≤ai≤1000 
+        so each element we find the min and max index of it 
+        and then for i=1000 to 1 check co prime natural and
+         find the max 
 
+*/
 
 void solve()
 {
-    ll n;
+    int n;
     cin>>n;
-    vll a(n),b(n),c(n);
+    vll arr(n);
     for(int i=0;i<n;i++) {
-        cin>>a[i];
+        cin>>arr[i];
     }
+    vector<int> maxi(1001,INT_MIN);
+    vector<int> mini(1001,INT_MAX);
     for(int i=0;i<n;i++) {
-        cin>>b[i];
+        int index=arr[i];
+        maxi[index]=max(maxi[index],i+1);
+        mini[index]=min(mini[index],i+1);
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
+    int ans=-1;
+    for(int i=1000;i>0;i--) {
+        for(int j=1000;j>0;j--) {
+            if(gcd(i,j)==1) {
+                if(maxi[i]!=INT_MIN&&maxi[j]!=INT_MAX)
+                    ans=max(ans,maxi[i]+maxi[j]);
+            }
+        }
     }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
+    cout<<ans<<endl;
     
 }
 

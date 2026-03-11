@@ -48,45 +48,65 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
-
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
-
-
 void solve()
 {
     ll n;
-    cin>>n;
-    vll a(n),b(n),c(n);
-    for(int i=0;i<n;i++) {
-        cin>>a[i];
+    cin >> n;
+    vll arr(n);
+    for (ll i = 0; i < n; i++)
+    {
+        cin >> arr[i];
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
+    if (n == 1)
+    {
+        cout << 1 << endl;
+        return;
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
+    ll gcd1 = arr[0];
+    ll gcd2 = arr[1];
+    for (ll i = 2; i < n; i += 2)
+    {
+        gcd1 = gcd(arr[i], gcd1);
     }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
+    for (ll i = 3; i < n; i += 2)
+    {
+        gcd2 = gcd(arr[i], gcd2);
     }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
+
+    bool flag = true;
+    for (ll i = 1; i < n; i += 2)
+    { // Check if gcd1 can be a valid d
+        if (arr[i] % gcd1 == 0)
+        { // If any odd indexed element is divisible by gcd1
+            flag = false;
+            break;
+        }
     }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
+    if (flag)
+    {
+        cout << gcd1 << endl; // gcd1 is a valid d
+        return;
+    }
+
+    flag = true;
+    for (ll i = 0; i < n; i += 2)
+    { // Check if gcd2 can be a valid d
+        if (arr[i] % gcd2 == 0)
+        { // If any even indexed element is divisible by gcd2
+            flag = false;
+            break;
+        }
+    }
+    if (flag)
+    {
+        cout << gcd2 << endl; // gcd2 is a valid d
+    }
+    else
+    {
+        cout << 0 << endl; // No valid d found
+    }
+
+    // cout<<max(gcd1,gcd2)<<endl;
 }
 
 int main()
@@ -96,7 +116,8 @@ int main()
 
     int tc = 1;
     cin >> tc;
-    while(tc--){
+    while (tc--)
+    {
         solve();
     }
     return 0;

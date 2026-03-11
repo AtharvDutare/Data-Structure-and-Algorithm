@@ -34,6 +34,7 @@ ll lcm(ll a,ll b) { return (a*b)/gcd(a,b); }
 string to_upper(string a) { for (int i=0;i<(int)a.size();++i) if (a[i]>='a' && a[i]<='z') a[i]-='a'-'A'; return a; }
 string to_lower(string a) { for (int i=0;i<(int)a.size();++i) if (a[i]>='A' && a[i]<='Z') a[i]+='a'-'A'; return a; }
 bool prime(ll a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a%i==0) return 0; return 1; }
+int msb(ll n) { if (n == 0) return -1; return 63 - __builtin_clzll(n); }
 
 //fast exponanation
 ll power(int a,int b){
@@ -48,45 +49,25 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
-
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
-
-
 void solve()
 {
-    ll n;
-    cin>>n;
-    vll a(n),b(n),c(n);
-    for(int i=0;i<n;i++) {
-        cin>>a[i];
+    ll a,b;
+    cin>>a>>b;
+    int ma=msb(a);
+    int mb=msb(b);
+    if(mb>ma) {
+        cout<<-1<<endl;
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
+    else if(mb==ma) {
+        cout<<1<<endl;
+        cout<<(a^b)<<endl;
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
+    else {
+        ll t=a^b;
+        t=t^((1LL<<msb(a)));
+        cout<<2<<endl;
+        cout<<t<<" "<<(1LL<<(msb(a)))<<endl;
     }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
 }
 
 int main()

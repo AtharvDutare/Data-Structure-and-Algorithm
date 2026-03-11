@@ -46,47 +46,91 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
+
+    |       |
+    |       |
+    |       |
+    |       |
+    |       |
+    
+    
+    < move to left side to current river
+    > move right side of current river
+
+    * move either left or right side
 
 
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
+    INTIUTION 
+    ifI **, ><, >*,*< then infinity(-1)
 
+    else it remains either <>>>> or <<>>>>
+    so choose max of it 
+
+
+    < < < < < < * > >
+    0,1,2,3,4,5,6,7,8
+*/
 
 void solve()
 {
-    ll n;
-    cin>>n;
-    vll a(n),b(n),c(n);
-    for(int i=0;i<n;i++) {
-        cin>>a[i];
+    string s;
+    cin>>s;
+    int n=s.length();
+    if(n==1) {
+        cout<<1<<endl;
+        return;
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
-    }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
-    }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
     
+    for(int i=0;i<n-1;i++) {
+        if(s[i]=='*'&&s[i+1]=='*') {
+            cout<<-1<<endl;
+            return;
+        }
+        if(s[i]=='>'&&s[i+1]=='<') {
+            cout<<-1<<endl;
+            return;
+        }
+        if(s[i]=='>'&&s[i+1]=='*') {
+            cout<<-1<<endl;
+            return;
+        }
+        if(s[i]=='*'&&s[i+1]=='<') {
+            cout<<-1<<endl;
+            return;
+        }
+    }
+    int first=-1;
+    int last=-1;
+    for(int i=0;i<n;i++) {
+        if(s[i]=='<') {
+            first=i;
+        }
+        if(s[i]=='>') {
+            last=i;
+            break;
+        }
+    }
+    if(first==-1||last==-1) {
+        cout<<n<<endl;
+    }
+    else {
+        if(last-first==1) {
+            cout<<max(first+1,n-(first+1))<<endl;
+        }
+        else {
+            // if(first+1>n-last) {
+            //     cout<<first+1+last<<endl; wrong
+            //     cout<<last<<endl; right
+            // }
+            // else {
+            //     cout<<n-(first+1)<<endl;
+            // }
+            cout<<n-min(first+1,n-last)<<endl;
+        }
+    }
+
+
 }
 
 int main()

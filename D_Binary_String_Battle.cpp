@@ -35,6 +35,9 @@ string to_upper(string a) { for (int i=0;i<(int)a.size();++i) if (a[i]>='a' && a
 string to_lower(string a) { for (int i=0;i<(int)a.size();++i) if (a[i]>='A' && a[i]<='Z') a[i]+='a'-'A'; return a; }
 bool prime(ll a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a%i==0) return 0; return 1; }
 
+static mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int RD = rng() & ((1 << 31) - 1);
+
 //fast exponanation
 ll power(int a,int b){
     if(!b) return 1;
@@ -46,47 +49,44 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
 
+Alice wins if she is able to transform all characters of s
+ into zeroes. If Alice is unable to win in a finite number of moves, then Bob wins.
 
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
+Alice and Bob take turns, with Alice going first.
 
+On Alice's turn, she may choose any subsequence∗
+ of length k in s
+, then set all characters in that subsequence to zero.
+On Bob's turn, he may choose any substring†
+ of length k in s
+, then set all characters in that substring to one.
+
+Note that Alice wins if the string consists of all zeros at any point during the game, including in between Alice's and Bob's turns.
+
+Determine who wins with optimal play.
+*/
 
 void solve()
 {
-    ll n;
-    cin>>n;
-    vll a(n),b(n),c(n);
-    for(int i=0;i<n;i++) {
-        cin>>a[i];
-    }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
-    }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
-    }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
     
+    ll n,k;
+    cin>>n>>k;
+    string s;
+    cin>>s;
+    int cnt=0;
+    for(auto &x:s) {
+        if(x=='1') {
+            cnt++;
+        }
+    }
+    if(cnt<=k||n<2*k) {
+        cout<<"Alice"<<endl;
+    }
+    else {
+        cout<<"Bob"<<endl;
+    }
 }
 
 int main()

@@ -48,45 +48,73 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
-
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
-
-
 void solve()
 {
     ll n;
     cin>>n;
-    vll a(n),b(n),c(n);
+    vector<ll> arr(n);
     for(int i=0;i<n;i++) {
-        cin>>a[i];
+        cin>>arr[i];
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
+    ll neg=0;
+    ll sum=0;
+    for(ll i=0;i<n;i++) {
+        if(arr[i]<0) {
+            neg++;
+            arr[i]=-arr[i];
+        }
+        sum+=arr[i];
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
+    sort(all(arr));
+    if(neg&1) {
+        sum-=2*arr[0];
     }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
+    cout<<sum<<endl;
+    // vector<pll> arr(n);
+    // for(ll i=0;i<n;i++) {
+    //     cin>>arr[i].first;
+    //     arr[i].second=i;
+    // }
+    // ll neg=0;
+    // for(ll i=0;i<n;i++) {
+    //     if(arr[i].first<0) {
+    //         neg++;
+    //     }
+    //     arr[i].first=abs(arr[i].first);
+    // }
+    // priority_queue<pll,vector<pll>,greater<pll>> pq;
+    // for(ll i=0;i<n;i++) {
+    //     pq.push(arr[i]);
+    // }
+    // int ans=0;
+    // while(!pq.empty()) {
+    //     if(neg>1) {
+    //         pll p=pq.top();
+    //         pq.pop();
+    //         pll q=pq.top();
+    //         pq.pop();
+    //         if(abs(p.second-q.second)<=1) {
+    //             ans+=(p.first+q.first);
+    //         }
+    //         else {
+    //             ans-=(p.first+q.first);
+    //         }
+    //         neg-=2;
+    //     }
+    //     else if(neg==1) {
+    //         pll p=pq.top();
+    //         pq.pop();
+    //         ans-=p.first;
+    //         neg--;
+    //     }
+    //     else {
+    //         pll p=pq.top();
+    //         pq.pop();
+    //         ans+=p.first;
+    //     }
+    // }
+    // cout<<ans<<endl;
+
 }
 
 int main()

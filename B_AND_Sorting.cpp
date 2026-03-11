@@ -46,54 +46,44 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
+
+    INTIUTION
+    
+    first find the element which is not inplace 
+    and find the 
 
 
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
-
+*/
 
 void solve()
 {
     ll n;
     cin>>n;
-    vll a(n),b(n),c(n);
+    vll arr(n);
     for(int i=0;i<n;i++) {
-        cin>>a[i];
+        cin>>arr[i];
     }
+    vll sot=arr;
+    sort(all(sot));
+    vector<int> ind;
     for(int i=0;i<n;i++) {
-        cin>>b[i];
+        if(arr[i]!=sot[i]) {
+            ind.push_back(i);
+        }
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
+    int x=arr[ind[0]];
+    for(int i=1;i<ind.size();i++) {
+        x&=arr[ind[i]];
     }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
+    cout<<x<<endl;
 }
 
 int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-
+    freopen("input.txt", "r", stdin);
     int tc = 1;
     cin >> tc;
     while(tc--){

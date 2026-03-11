@@ -35,6 +35,9 @@ string to_upper(string a) { for (int i=0;i<(int)a.size();++i) if (a[i]>='a' && a
 string to_lower(string a) { for (int i=0;i<(int)a.size();++i) if (a[i]>='A' && a[i]<='Z') a[i]+='a'-'A'; return a; }
 bool prime(ll a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a%i==0) return 0; return 1; }
 
+static mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+const int RD = rng() & ((1 << 31) - 1);
+
 //fast exponanation
 ll power(int a,int b){
     if(!b) return 1;
@@ -48,45 +51,47 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
-
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
-
-
 void solve()
 {
-    ll n;
-    cin>>n;
-    vll a(n),b(n),c(n);
-    for(int i=0;i<n;i++) {
-        cin>>a[i];
+    ll n,s;
+    cin>>n>>s;
+    vll arr(n);
+    ll sum=0;
+    int zero=0,one=0,two=0;
+    f(i,0,n) {
+        cin>>arr[i];
+        sum+=arr[i];
+        if(arr[i]==0) {
+            zero++;
+        }
+        else if(arr[i]==1) {
+            one++;   
+        }
+        else {
+            two++;
+        }
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
+
+    if(s<sum||(s-sum)==1) {
+        while(zero>0) {
+            cout<<'0'<<" ";
+            zero--;
+        }
+        while(two>0) {
+            cout<<'2'<<" ";
+            two--;
+        }
+        while(one>0) {
+            cout<<'1'<<" ";
+            one--;
+        }
+        cout<<endl;
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
+    else {
+        cout<<-1<<endl;
     }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
+
+
 }
 
 int main()

@@ -46,47 +46,103 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
 
+    INITUITION
 
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
+    four cases 
+    a*b*a*
+    b*a*b*
+    a*b*
+    b*a*
 
+*/
 
 void solve()
 {
     ll n;
     cin>>n;
-    vll a(n),b(n),c(n);
+    string s;
+    cin>>s;
+    vll pa(n),pb(n),sa(n),sb(n);
+    vll cnta(n),cntb(n);
+    ll totala=0;
+    ll totalb=0;
+    for(ll i=0;i<n;i++) {
+        if(s[i]=='a') {
+            totala++; 
+        }
+        else {
+            totalb++;  
+        }
+        cnta[i]=totala;
+        cntb[i]=totalb;
+    }
+    // prll_v(cnta);
+    // prll_v(cntb);
+
+    //pa[0]=s[0]=='a';
+    //make all a togethor
+    for(ll i=1;i<n;i++) {
+        if(s[i]=='b') {
+            pa[i]=pa[i-1]+cnta[i];
+            //cout<<"hello"<<endl;
+        }
+        else {
+            pa[i]=pa[i-1];
+        }
+    }
+
+    //pb[0]=s[0]=='b';
+    //make all b togethor
+    for(ll i=1;i<n;i++) {
+        if(s[i]=='a') {
+            pb[i]=pb[i-1]+cntb[i];
+        }
+        else {
+            pb[i]=pb[i-1];
+        }
+    }
+
+    //sa[n-1]=s[n-1]=='a';
+    //make all a togethor
+    for(ll i=n-2;i>-1;i--) {
+        if(s[i]=='b') {
+            sa[i]=sa[i+1]+totala-cnta[i];
+        }
+        else {
+            sa[i]=sa[i+1];
+        }
+    }
+
+    //sa[n-1]=s[n-1]=='b';
+    //make all b togethor
+    for(ll i=n-2;i>-1;i--) {
+        if(s[i]=='a') {
+            sb[i]=sb[i+1]+totalb-cntb[i];
+        }
+        else {
+            sb[i]=sb[i+1];
+        }
+    }
+    ll ans=LLONG_MAX;
     for(int i=0;i<n;i++) {
-        cin>>a[i];
+        ans=min(ans,pa[i]+sa[i]);
+        ans=min(ans,pb[i]+sb[i]);
+        // if(ans==0) {
+        //     cout<<i<<endl;
+        // }
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
-    }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
-    }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
+    cout<<ans<<endl;
+    // cout<<"pa"<<endl;
+    // print_v(pa);
+    // cout<<"pb"<<endl;
+    // print_v(pb);
+    // cout<<"sa"<<endl;
+    // print_v(sa);
+    // cout<<"sb"<<endl;
+    // print_v(sb);
+
 }
 
 int main()

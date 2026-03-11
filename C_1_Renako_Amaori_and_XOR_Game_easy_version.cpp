@@ -46,48 +46,57 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on
 
 
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
 
+*/
 
 void solve()
 {
-    ll n;
+    int n;
     cin>>n;
-    vll a(n),b(n),c(n);
-    for(int i=0;i<n;i++) {
+    vi a(n),b(n);
+    f(i,0,n) {
         cin>>a[i];
-    }
-    for(int i=0;i<n;i++) {
+    }   
+    f(i,0,n) {
         cin>>b[i];
     }
+
+    int x1=0;
+    int x2=0;
+
     for(int i=0;i<n;i++) {
-        cin>>c[i];
+        x1^=a[i];
+        x2^=b[i];
     }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
+    if(x1==x2) {
+        cout<<"Tie"<<endl;
+        return;
     }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
+    
+    int lastIndex=-1;
+    for(int i=n-1;i>-1;i--) {
+        if(a[i]!=b[i]) {
+            lastIndex=i;
+            break;
+        }
     }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
+    if(lastIndex!=-1) {
+        if(lastIndex%2) {
+            cout<<"Mai"<<endl;
+        }
+        else {
+            cout<<"Ajisai"<<endl;
+        }
+    }
+    else {
+        cout<<"Tie"<<endl;
+    }
     
 }
+
 
 int main()
 {

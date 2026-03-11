@@ -13,6 +13,7 @@ using namespace std;
 #define si set<int>
 #define sc set<char>
 #define Graph unordered_map<int,vector<int>>
+#define mat(m,n,ele) vector<vector<int>>(m,vector<int>(n,ele))
 
 /* FUNCTIONS */
 #define f(i,s,e) for(long long int i=s;i<e;i++)
@@ -46,47 +47,68 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
+    create extra matrix which is 180 deg rotate 
+        for i=1 to n
+            for j=1 to n
+                matRotate(i,j)=mat(j,i)
+    if mat(i,j)!=matRotate(i,j)
+        k--
+    if(k>0) yes
+    else no
 
-
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
-
+*/
 
 void solve()
 {
-    ll n;
-    cin>>n;
-    vll a(n),b(n),c(n);
+    ll n,k;
+    cin>>n>>k;
+    vector<vector<int>> m(n, vector<int>(n, 0)),mRotate(n, vector<int>(n, 0));
     for(int i=0;i<n;i++) {
-        cin>>a[i];
+        for(int j=0;j<n;j++) {
+            int x;
+            cin>>x;
+            m[i][j]=x;
+            mRotate[i][j]=x;
+        }
     }
+    for(int i=0;i<n/2;i++) {
+        for(int j=0;j<n;j++) {
+            swap(mRotate[i][j],mRotate[n-1-i][n-1-j]);
+        }
+    }
+    if (n % 2 != 0) {
+        int mid = n / 2;
+        for (int j = 0; j < n/2; j++)
+            swap(mRotate[mid][j], mRotate[mid][n - j - 1]);
+    }
+    int cnt=0;
     for(int i=0;i<n;i++) {
-        cin>>b[i];
+        for(int j=0;j<n;j++) {
+            if(m[i][j]!=mRotate[i][j]) {
+                cnt++;
+            }
+        }
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
+    cnt=cnt/2;
+    if(cnt>k) {
+        no();
+        return;
     }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
+    else {
+        int rem=k-cnt;
+        if(rem%2==0) {
+            yes();
+        }
+        else {
+            if(n%2==0) {
+                no();
+            }
+            else {
+                yes();
+            }
+        }
     }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
 }
 
 int main()

@@ -46,47 +46,89 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
 
 
-bool check(vll &a,vll &b,int j,int k) {
-    int n=a.size();
-    for(int i=0;i<n;i++) {
-        if(a[(i+j)%n]>=b[(i+k)%n]) {
-            return false;
-        }
-    }
-    //cout<<"athrv"<<endl;
-    return true;
-}
+    EXAMPLE
 
+    4
+    f1=1 f1=1 f2=1 f3=2
+
+    1 2 3 3
+
+    INTIUTION
+
+    using map we find the no of different element can be in array a
+
+
+    minElement possible in array a if
+        for all map[x,y]
+            minElement+=x //all the element of that freq is same
+    
+    if(minElement<=n) 
+        array a is exists
+    
+    
+
+*/
 
 void solve()
 {
     ll n;
     cin>>n;
-    vll a(n),b(n),c(n);
+    vll arr(n);
+    f(i,0,n) {
+        cin>>arr[i];
+    }
+    vector<int> freq(n+1,0);
+    vector<vector<int>> vec(n+1);
     for(int i=0;i<n;i++) {
-        cin>>a[i];
+        freq[arr[i]]++;
+        vec[arr[i]].pb(i);
     }
-    for(int i=0;i<n;i++) {
-        cin>>b[i];
+    vector<int> ans(n);
+    int x=0;
+    for(int i=1;i<=n;i++) {
+        if(freq[i]==0) {
+            continue;
+        }
+        if(freq[i]%(i)) {
+            cout<<-1<<endl;
+            return;
+        }
+        for(int j=0;j<freq[i];j++) {
+            if(j%i==0) {
+                x++;
+            }
+            ans[vec[i][j]]=x;
+        }
     }
-    for(int i=0;i<n;i++) {
-        cin>>c[i];
-    }
-    //cout<<a.size()<<endl;
-    int cnt1=0;
-    int cnt2=0;
-    for(int i=0;i<n;i++) {
-        cnt1+=check(a,b,i,0);
-    }
-    for(int k=0;k<n;k++) {
-        cnt2+=check(b,c,0,k);
-    }
-    //cout<<cnt1<<" "<<cnt2<<endl;
-    cout<<cnt1*cnt2*n<<endl;
-    
+    print_v(ans);
+
+
+
+
+    // set<ll> st;
+    // for(ll i=0;i<n;i++) {
+    //     st.insert(arr[i]);
+    // }
+    // ll totalEle=0;
+    // for(auto &x:st) {
+    //     totalEle+=x;
+    // }
+    // if(totalEle>n) {
+    //     cout<<-1<<endl;
+    //     return;
+    // }
+    // ll ele=1;
+    // vi ans;
+    // for(auto &x:st) {
+    //     for(int i=0;i<x;i++) {
+    //         ans.pb(ele);
+    //     }
+    //     ele++;
+    // }
+    // print_v(ans);
 }
 
 int main()
