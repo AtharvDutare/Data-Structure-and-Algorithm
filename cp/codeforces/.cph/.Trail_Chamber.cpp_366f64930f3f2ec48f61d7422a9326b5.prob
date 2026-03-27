@@ -1,0 +1,1 @@
+{"name":"Local: Trail_Chamber","url":"d:\\gitFile\\Data-Structure-and-Algorithm\\Trail_Chamber.cpp","tests":[{"id":1773374799868,"input":"5\n6\n0 1 0 1 0 1\n1 0 1 0 1 0\n0 1 1 1 1 0\n0 0 1 1 1 0\n1 1 1 1 1 1","output":"3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\gitFile\\Data-Structure-and-Algorithm\\Trail_Chamber.cpp","group":"local","local":true}
