@@ -97,12 +97,40 @@ void no() { cout<<"NO\n"; }
 
 /* 
     Problem Statement: 
+
+
+
+
     Observation: 
     Thoughts: 
 */
+
+
+
 void solve()
 {
-    
+    int n,k;
+    cin>>n>>k;
+    vi arr(n);
+    vector<int> freq(n+1,0);
+    f(i,0,n) cin>>arr[i],freq[arr[i]]++;
+
+    f(i,1,n+1) freq[i]+=freq[i-1];
+
+    for(int g=n;g>=1;g--) {
+        int less4g=freq[min(n,4*g-1)];
+        int greaterEql4g=n-less4g;
+        int good=greaterEql4g;
+        if(g<=n) good+=freq[g]-freq[g-1];
+        if(2*g<=n) good+=freq[2*g]-freq[2*g-1];
+        if(3*g<=n) good+=freq[3*g]-freq[3*g-1];
+        if(good>=n-k){ 
+            cout<<g<<endl;
+            return;
+        }
+    }
+    cout<<1<<endl;
+
 }
 
 int main()

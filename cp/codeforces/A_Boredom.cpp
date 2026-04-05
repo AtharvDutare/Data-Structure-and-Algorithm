@@ -102,7 +102,11 @@ void no() { cout<<"NO\n"; }
 */
 void solve()
 {
-    
+    int n;
+    cin>>n;
+    vi arr(n);
+    f(i,0,n) cin>>arr[i];
+       
 }
 
 int main()
@@ -111,7 +115,7 @@ int main()
     cin.tie(nullptr);
 
     int tc = 1;
-    cin >> tc;
+    //cin >> tc;
     while(tc--){
         solve();
     }

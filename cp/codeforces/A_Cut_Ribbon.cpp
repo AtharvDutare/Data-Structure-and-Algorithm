@@ -102,7 +102,23 @@ void no() { cout<<"NO\n"; }
 */
 void solve()
 {
-    
+    int n,a,b,c;
+    cin>>n>>a>>b>>c;
+    vector<int> dp(n+1,-1e9);
+    dp[0]=0;
+    for(int i=1;i<=n;i++) {
+        if(i-a>=0) {
+            dp[i]=max(dp[i-a]+1,dp[i]);
+        }
+        if(i-b>=0) {
+            dp[i]=max(dp[i-b]+1,dp[i]);
+        }
+        if(i-c>=0) {
+            dp[i]=max(dp[i-c]+1,dp[i]);
+        }
+    }
+    cout<<dp[n]<<endl;
+
 }
 
 int main()
@@ -111,7 +127,7 @@ int main()
     cin.tie(nullptr);
 
     int tc = 1;
-    cin >> tc;
+    //cin >> tc;
     while(tc--){
         solve();
     }

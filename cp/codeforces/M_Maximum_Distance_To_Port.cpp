@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
 
 /* clang-format off */
 
@@ -76,10 +73,6 @@ bool prime(ll a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a
 
 //static mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 //const int RD = rng() & ((1 << 31) - 1);
-typedef tree<int, null_type, less<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_set;
-typedef tree<int, null_type, less_equal<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_multiset;
-//FIND_BY_ORDER(K)  --> VALUE AT KTH INDEX (ITERATOR)
-//ORDER_OF_KEY(K)   --> INDEX OF VALUE K
 
 //fast exponanation
 ll power(int a,int b){
@@ -94,15 +87,42 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
-
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
-*/
 void solve()
 {
+    int n,m,k;
+    cin>>n>>m>>k;
+    vi a(n+1);
+    f(i,1,n+1) cin>>a[i];
+    vector<int> adj[n+1];
+    for(int i=0;i<m;i++) {
+        int u,v;
+        cin>>u>>v;
+        adj[u].pb(v);
+        adj[v].pb(u);
+    }
+    vector<int> ans(k+1,0);
+    queue<int> q;
+    vector<int> dist(n+1,-1);
+    q.push(1);
+    dist[1]=0;
+    while(!q.empty()) {
+        int node=q.front();
+        q.pop();
+        for(auto &neig:adj[node]) {
+            if(dist[neig]==-1){
+                dist[neig]=dist[node]+1;
+                q.push(neig);
+            }
+        }
     
+    }
+   for(int i=1;i<=n;i++) {
+        int t=a[i];
+        ans[t]=max(ans[t],dist[i]);
+   }
+   for(int i=1;i<=k;i++) {
+        cout<<ans[i]<<" ";
+   }cout<<endl;
 }
 
 int main()
@@ -111,7 +131,7 @@ int main()
     cin.tie(nullptr);
 
     int tc = 1;
-    cin >> tc;
+    // cin >> tc;
     while(tc--){
         solve();
     }

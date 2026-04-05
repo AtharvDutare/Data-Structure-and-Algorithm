@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
 
 /* clang-format off */
 
@@ -76,10 +73,6 @@ bool prime(ll a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a
 
 //static mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 //const int RD = rng() & ((1 << 31) - 1);
-typedef tree<int, null_type, less<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_set;
-typedef tree<int, null_type, less_equal<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_multiset;
-//FIND_BY_ORDER(K)  --> VALUE AT KTH INDEX (ITERATOR)
-//ORDER_OF_KEY(K)   --> INDEX OF VALUE K
 
 //fast exponanation
 ll power(int a,int b){
@@ -92,17 +85,60 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
+
+    INTUITION
+
+    select the first element as smallest and 
+    then create a window then if arr[i+1]-arr[i]==1
+    then added to window 
+    if arr[i+1]-arr[i]==-1
+    then also possible only if arr[i+1] should we present in window 
+
+    else then destory the window then 
 
 
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
 */
+
+
 void solve()
 {
-    
+    ll n;
+    cin>>n;
+    vector<ll> arr(n);
+    for(ll i=0;i<n;i++) {
+        cin>>arr[i];
+    }
+    ll ans=1;
+    int l=arr[0],r=arr[0];
+    for(ll i=1;i<n;i++) {
+        if(arr[i]<=l||r+1<arr[i]) {
+            l=arr[i];
+            r=arr[i];
+            ans++;
+        }
+        else {
+            r=arr[i];
+        }
+    }
+    cout<<ans<<endl;
+}
+
+void solve2() {
+    ll n;
+    cin>>n;
+    vector<ll> arr(n);
+    for(ll i=0;i<n;i++) {
+        cin>>arr[i];
+    }
+    stack<int> st;
+    for(int i=n-1;i>-1;i--) {
+        while(!st.empty()&&arr[i]==st.top()-1) {
+            st.pop();
+        }
+        st.push(arr[i]);
+    }
+    cout<<(int)st.size()<<endl;
 }
 
 int main()
@@ -113,7 +149,7 @@ int main()
     int tc = 1;
     cin >> tc;
     while(tc--){
-        solve();
+        solve2();
     }
     return 0;
 }

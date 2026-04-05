@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
 
 /* clang-format off */
 
@@ -76,10 +73,6 @@ bool prime(ll a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a
 
 //static mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 //const int RD = rng() & ((1 << 31) - 1);
-typedef tree<int, null_type, less<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_set;
-typedef tree<int, null_type, less_equal<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_multiset;
-//FIND_BY_ORDER(K)  --> VALUE AT KTH INDEX (ITERATOR)
-//ORDER_OF_KEY(K)   --> INDEX OF VALUE K
 
 //fast exponanation
 ll power(int a,int b){
@@ -92,17 +85,56 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
 
 
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
+
+
+
+
+
+
+
+    from [0 to 2^n-1] select n element which give maximum 1 bit when all anding
+
+
+    1 1 1 1 1   31 
+
+    0 1 1 1 1   15
+
+    0 0 1 1 1   7   
+    1 0 1 1 1   23
+
+    0 0 0 1 1   3
+    0 1 0 1 1   11
+    1 0 0 1 1   19
+    1 1 0 1 1   27
+
+    0 0 0 0 1   1
+    0 0 1 0 1   5
+    0 1 0 0 1   9
+    0 1 1 0 1   13
+    1 0 0 0 1   17
+    1 0 1 0 1   21
+    1 1 0 0 1   25
+    1 1 1 0 1   29
+    
+    0 0 0 0 0   0
+
 */
+
 void solve()
 {
-    
+    int n;
+    cin>>n; // n<=16
+    cout<<pow(2,n)-1<<" ";
+    for(int i=1;i<=n;i++) {
+        for(int j=0;j<(1<<i);j+=2) {
+            cout<<(j)*(1<<(n-i))+((1<<(n-i))-1)<<" ";
+        }
+    }
+    cout<<endl;
+
 }
 
 int main()

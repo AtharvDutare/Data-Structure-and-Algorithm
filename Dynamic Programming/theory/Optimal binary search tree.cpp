@@ -93,16 +93,47 @@ void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
 /* clang-format on */
+int minCost(vector<int> &keys, vector<int> &freq) {
+        // code here
+        int n=keys.size();
+        keys.insert(keys.begin(),0);
+        freq.insert(freq.begin(),0);
+        vector<int>pre(n+1,0);
+        vector<vector<int>> dp(n+1,vector<int>(n+1,0));
+        for(int i=1;i<=n;i++) {
+            pre[i]=pre[i-1]+freq[i];
+        }
+        for(int g=1;g<=n;g++) {
+            for(int i=1,j=g;j<=n;i++,j++) {
+                if(g==1) {
+                    dp[i][i]=freq[i];
+                }
+                else {
+                    int mini=1e9;
+                    int sum=pre[j]-pre[i-1];
+                    for(int k=i;k<=j;k++) {
+                        int left=(k>i)?dp[i][k-1]:0;
+                        int right=(k<j)?dp[k+1][j]:0;
+                        mini=min(mini,left+right);
+                    }
+                    dp[i][j]=mini+sum;
+                }
+            }
+        }
+        // for(int i=0;i<=n;i++) {
+        //     print(dp[i]);
+        // }
+        return dp[1][n];
+    }
 
-
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
-*/
 void solve()
 {
-    
+    int n;
+    cin>>n;
+    vi a(n),b(n);
+    f(i,0,n) cin>>a[i];
+    f(i,0,n) cin>>b[i];
+    cout<<minCost(a,b)<<endl;
 }
 
 int main()

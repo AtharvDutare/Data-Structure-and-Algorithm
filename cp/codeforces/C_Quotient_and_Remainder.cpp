@@ -92,17 +92,97 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
 
 
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
+
+/* clang-format on 
+
+
+    Brute force 
+
+    mapping mx x to freq
+    mapping my y to freq
+
+    for(int x=1;x<=k;x++) {
+        for(int y=1;y<x;y++) {
+            if(mp[x/y]>0&&mp[x%y]>0) {
+                mp[x/y]--;
+                mp[x%y]--;
+                ans++;
+            }
+        }
+    }
+
+
+
+
+
+
+
 */
+
+bool check(ll c,ll k,vll &q,vll &r) {
+    ll n=q.size();
+    for(ll i=0;i<c;i++) {
+        ll a=q[i]+1;
+        ll b=r[c-i-1]+1;
+        if(a*b-1>k) {
+            return false;
+        }
+    }
+    return true;
+}
+
 void solve()
 {
-    
+    ll n,k;
+    cin>>n>>k;
+    vll q(n),r(n);
+    f(i,0,n) cin>>q[i];
+    f(i,0,n) cin>>r[i];
+    sort(all(q));
+    sort(all(r));
+    ll s=0;
+    ll e=n;
+    ll ans=0;
+    while(s<=e) {
+        ll mid=(e-s)/2+s;
+        if(check(mid,k,q,r)) {
+            ans=mid;
+            s=mid+1;
+        }
+        else {
+            e=mid-1;
+        }
+    }    
+    cout<<ans<<endl;
+
+
+
+    // sort(all(q));
+    // multiset<ll> rr;
+    // int ans=0;
+    // for(int i=0;i<n;i++) rr.insert(r[i]);
+    // for(int i=0;i<n;i++) {
+    //     auto it=rr.upper_bound((k/q[i])-1);
+    //     if(it==rr.begin()) {
+    //         continue;
+    //     }
+    //     else if(it==rr.end()) {
+    //         if(rr.size()>0) {
+    //             rr.erase(prev(rr.end()));
+    //             ans++;
+    //         }
+    //         else {
+    //             break;
+    //         }
+    //     }
+    //     else {
+    //         rr.erase(it);
+    //         ans++;
+    //     }
+    // }
+    // cout<<ans<<endl;
 }
 
 int main()

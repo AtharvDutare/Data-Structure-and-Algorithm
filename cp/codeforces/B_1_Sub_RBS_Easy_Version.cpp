@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
 
 /* clang-format off */
 
@@ -76,10 +73,6 @@ bool prime(ll a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a
 
 //static mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 //const int RD = rng() & ((1 << 31) - 1);
-typedef tree<int, null_type, less<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_set;
-typedef tree<int, null_type, less_equal<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_multiset;
-//FIND_BY_ORDER(K)  --> VALUE AT KTH INDEX (ITERATOR)
-//ORDER_OF_KEY(K)   --> INDEX OF VALUE K
 
 //fast exponanation
 ll power(int a,int b){
@@ -94,14 +87,39 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
-
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
-*/
 void solve()
 {
+    int n;
+    cin>>n;
+    string s;
+    cin>>s;
+    vi v(n),open(n),close(n);
+    for(int i=0;i<n;i++) {
+        if(s[i]=='(') v[i]=1,open[i]=1;
+        else v[i]=-1,close[i]=1;
+    }
+    for(int i=n-2;i>-1;i--) {
+        open[i]=open[i+1]+open[i];
+        close[i]=close[i+1]+close[i];
+    }
+    int sum=0;
+    int ans=-1;
+    int no=1;
+    for(int i=0;i<n-1;i++) {
+        sum+=v[i];
+        no=max(no,i+1);
+        if(v[i+1]==-1) {
+            while(no<n&&v[no]!=1) no++;
+            if(no==n) break;
+            int temp_open=open[no];
+            int temp_close=close[no];
+            if(sum+1<=close[no]) {
+                temp_open--;
+                ans=max(ans,sum+1+i+2+2*min(temp_close-sum-1,temp_open));
+            }
+        }
+    }
+    cout<<ans<<endl;
     
 }
 

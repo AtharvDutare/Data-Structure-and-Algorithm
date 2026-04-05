@@ -98,11 +98,64 @@ void no() { cout<<"NO\n"; }
 /* 
     Problem Statement: 
     Observation: 
+
+
+    instead of 
     Thoughts: 
 */
+
 void solve()
 {
+    int n;
+    cin>>n;
+    vi a(n),b(n);
+    f(i,0,n) cin>>a[i];
+    f(i,0,n) cin>>b[i];
+    int maxi=*max_element(all(a));
+    vector<vector<int>> pr(maxi+1,vector<int>());
+    map<int,int>mp;    
+    for(int i=0;i<n;i++) {
+        if(a[i]==1) { mp[1]++; continue; }
+        int t=a[i];
+        for(int j=2;j*j<=t;j++) {
+            if(t%j==0) {
+                while((t>0)&&(t%j==0)) t/=j;
+                mp[j]++;
+                pr[a[i]].pb(j);
+            }
+            if(mp[j]>=2) {
+                cout<<0<<endl;
+                return;
+            }
+        }
+        if(t*t>a[i])
+            mp[t]++;
+    }
     
+    for(int i=0;i<n;i++) {
+        // we have to find the way to reduce the 
+        for(int k=0;k<pr[a[i]].size();k++) {
+            mp[pr[a[i]][k]]--;
+        }
+        int t=a[i]+1;
+        for(int j=2;j*j<=t;j++) {
+            if(t%j==0) {
+                while((t>0)&&(t%j==0)) t/=j;
+                if(mp[j]>=1) {
+                    cout<<1<<endl;
+                    return;
+                }
+            }
+        }
+        for(int k=0;k<pr[a[i]].size();k++) {
+            mp[pr[a[i]][k]]++;
+        }
+    }
+    cout<<2<<endl;
+
+    
+    
+
 }
 
 int main()
@@ -112,6 +165,7 @@ int main()
 
     int tc = 1;
     cin >> tc;
+   // vector<int> p=isPrime(200000);
     while(tc--){
         solve();
     }

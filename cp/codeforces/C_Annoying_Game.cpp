@@ -92,17 +92,46 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on
 
 
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
+    observation 
+
+    last move was the decide the sum
+
+    if k is odd then last is alice 
+
+
 */
+
 void solve()
 {
-    
+    ll n,k;
+    cin>>n>>k;
+    vll a(n),b(n);
+    f(i,0,n) cin>>a[i];
+    f(i,0,n) cin>>b[i];
+    k&=1;
+    vector<ll> pre(n),suff(n);
+    for(int i=0;i<n;i++) {
+        pre[i]=(((i)&&(pre[i-1]>0))?pre[i-1]:0LL)+a[i];
+    }
+    for(int i=n-1;i>-1;i--) {
+        suff[i]=(((i+1<n)&&(suff[i+1]>0))?suff[i+1]:0LL)+a[i];
+    }
+    if(k==0) {
+        ll ans=*max_element(all(pre));
+        cout<<ans<<endl;
+        return;
+    }
+    else {
+        ll ans=LLONG_MIN;
+        for(int i=0;i<n;i++) {
+            ans=max(ans,pre[i]+suff[i]-a[i]+b[i]);
+        }
+        cout<<ans<<endl;
+        return;
+    }
 }
 
 int main()

@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-using namespace std;
 using namespace __gnu_pbds;
+using namespace std;
 
 /* clang-format off */
 
@@ -24,6 +24,8 @@ using namespace __gnu_pbds;
 #define pb push_back
 #define eb emplace_back
 #define all(x) x.begin(), x.end()
+
+template<class T> using ordered_multiset = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 /* PRINTS */
 // 1. For most containers (Vector, Set, List)
@@ -76,10 +78,6 @@ bool prime(ll a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a
 
 //static mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 //const int RD = rng() & ((1 << 31) - 1);
-typedef tree<int, null_type, less<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_set;
-typedef tree<int, null_type, less_equal<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_multiset;
-//FIND_BY_ORDER(K)  --> VALUE AT KTH INDEX (ITERATOR)
-//ORDER_OF_KEY(K)   --> INDEX OF VALUE K
 
 //fast exponanation
 ll power(int a,int b){
@@ -89,20 +87,33 @@ ll power(int a,int b){
     return ((half_power*half_power)%MOD*a%MOD)%MOD;
 }
 
-void yes() { cout<<"YES\n"; }
-void no() { cout<<"NO\n"; }
+void yes() { cout<<"Yes\n"; }
+void no() { cout<<"No\n"; }
 
 /* clang-format on */
 
-
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
-*/
 void solve()
 {
-    
+    int n;
+    cin>>n;
+    vi arr(n);
+    f(i,0,n) cin>>arr[i];
+    vi pre(n),suff(n);
+    pre[0]=arr[0];
+    for(int i=1;i<n;i++) {
+        pre[i]=min(pre[i-1],arr[i]);
+    }
+    suff[n-1]=arr[n-1];
+    for(int i=n-2;i>-1;i--) {
+        suff[i]=max(suff[i+1],arr[i]);
+    }
+    for(int i=1;i<n;i++) {
+        if(pre[i-1]>suff[i]) {
+            no();
+            return;
+        }
+    }
+    yes();
 }
 
 int main()

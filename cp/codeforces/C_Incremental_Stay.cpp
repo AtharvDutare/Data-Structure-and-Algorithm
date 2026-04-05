@@ -98,11 +98,49 @@ void no() { cout<<"NO\n"; }
 /* 
     Problem Statement: 
     Observation: 
+
+    sort it and then for we have to create k pairs such that any pair has  find the maximum
+    pair difference 
+
     Thoughts: 
+
+
+    the testcase 
+    
+    1 3 4 5 6 7 8 9
+
+    8 3
+    
+    for each k we can create a window of 2*k-1 and then find the max; 
+
+
 */
 void solve()
 {
+    int n;
+    cin>>n;
+    vll arr(2*n+1);
+    f(i,1,2*n+1) cin>>arr[i];
+    //sort(all(arr));
+    for(int k=1;k<=n;k++) {
+        multiset<int> st;
+        ll ans=0;
+        for(int j=1;j<=k;j++) {
+            st.insert(arr[j]);
+        }
+        for(int t=k;t<=2*n;t++) {
+            int p=*st.begin();
+            st.erase(st.begin());
+            ans=max(ans,arr[t]-p);
+            st.insert(arr[t]);
+        }
+        cout<<ans<<' ';
     
+    }
+    cout<<endl;
+
+
+
 }
 
 int main()

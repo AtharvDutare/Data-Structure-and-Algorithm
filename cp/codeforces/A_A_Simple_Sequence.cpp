@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
 
 /* clang-format off */
 
@@ -76,10 +73,6 @@ bool prime(ll a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a
 
 //static mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 //const int RD = rng() & ((1 << 31) - 1);
-typedef tree<int, null_type, less<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_set;
-typedef tree<int, null_type, less_equal<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_multiset;
-//FIND_BY_ORDER(K)  --> VALUE AT KTH INDEX (ITERATOR)
-//ORDER_OF_KEY(K)   --> INDEX OF VALUE K
 
 //fast exponanation
 ll power(int a,int b){
@@ -94,15 +87,13 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
-
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
-*/
 void solve()
 {
-    
+    int n;
+    cin>>n;
+    for(int i=n;i>0;i--) {
+        cout<<i<<" ";
+    }cout<<endl;
 }
 
 int main()

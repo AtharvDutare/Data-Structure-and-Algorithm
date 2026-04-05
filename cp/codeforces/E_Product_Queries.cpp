@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
 
 /* clang-format off */
 
@@ -76,10 +73,6 @@ bool prime(ll a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a
 
 //static mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 //const int RD = rng() & ((1 << 31) - 1);
-typedef tree<int, null_type, less<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_set;
-typedef tree<int, null_type, less_equal<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_multiset;
-//FIND_BY_ORDER(K)  --> VALUE AT KTH INDEX (ITERATOR)
-//ORDER_OF_KEY(K)   --> INDEX OF VALUE K
 
 //fast exponanation
 ll power(int a,int b){
@@ -92,17 +85,120 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
+
+    what is question exactly???
 
 
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
+    for each index from 1 to n
+    if it is possible to make product of element into i with min element then yes 
+    else -1
+
+
+    dp???
+
+    dp[n]
+    //we had a mapping of element 
+    for(int i=1;i<=n;i++) {
+        for(int j=1;j*j<=i;i++) {
+            int t=0
+            int k=i;
+            while(k%j==0) {
+                k/=j;
+                t++;
+            }   
+            dp[i]=min(dp[i],t+dp[k]);
+        }
+    }
+    for(int i=1;i<=n;i++) {
+        if(dp[i]==INT_MAX) {
+            cout<<-1<<" ";
+        }
+        else {
+            cout<<dp[i]<<" ";l
+        }
+    }cout<<endl;
+
+
+
 */
+
 void solve()
 {
-    
+    int n;
+    cin>>n;
+    vi arr(n);
+    f(i,0,n) cin>>arr[i];
+    sort(all(arr));
+    vector<int> dp(n+1,1e9);
+    for(int i=0;i<n;i++) {
+        dp[arr[i]]=1;
+    }
+    dp[1]=0;
+    for(int i=1;i<=n;i++) {
+        if(dp[i]==1e9) continue;
+
+        for(auto &x:arr) {
+            if(1LL*x*i<=n) {
+                dp[x*i]=min(dp[x*i],dp[i]+1);
+            }
+            else {
+                break;
+            }
+        }
+    }
+    dp[1]=-1;
+    for(int i=0;i<n;i++) {
+        if(arr[i]==1) {
+            dp[1]=1;
+            break;
+        }
+    }
+    for(int i=1;i<=n;i++) {
+        if(dp[i]==1e9) {
+            cout<<-1<<" ";
+        }
+        else
+        cout<<dp[i]<<" ";
+    }
+    cout<<endl;
+}
+void solve1() {
+    int n;
+    cin>>n;
+    vi dp(n+1,1e9);
+    f(i,0,n) {
+        int x;
+        cin>>x;
+        dp[x]=1;
+    }
+    // print(dp);
+    for(int i=1;i<=n;i++) {
+        for(int j=i;j<=n;j+=i) {
+            dp[j]=min(dp[j],dp[i]+dp[j/i]);
+
+            /* 
+
+                it is a pull dp 
+
+                j=i*(j/i)
+            
+
+
+            
+            */
+        }
+        // print(dp);
+    }
+    for(int i=1;i<=n;i++) {
+        if(dp[i]==1e9) {
+            cout<<-1<<" ";
+        }
+        else {
+            cout<<dp[i]<<" ";
+        }
+    }cout<<endl;
+
 }
 
 int main()
@@ -113,7 +209,7 @@ int main()
     int tc = 1;
     cin >> tc;
     while(tc--){
-        solve();
+        solve1();
     }
     return 0;
 }

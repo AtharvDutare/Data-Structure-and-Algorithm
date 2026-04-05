@@ -85,53 +85,89 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on 
+/* clang-format on
 
-    INTUITION
+    to every sum is odd 
+
+    one odd and other is even 
+    if 
+
+    for solution to exist atleast one odd 
+    
+    lets try dp 
+
+    vector<int> dp(n+1);
+    dp[1]=max of odd value
+    for(int i=2;i<=n;i++) {
+        int k1=cost of 2 odd+dp[i-2];
+        int k2=cost of one even+dp[i-1];
+        if(k1>k2) {
+            remove the k1 element 
+        }
+        else {
+            remove the one even element
+        }
+        dp[i]=max(k1,k2);
+
+    }
+
 
 */
- int lengthOfLIS(vector<int>& arr) {
-        int n=arr.size();
-        vector<int> lis;
-        vector<int> track;
-        vector<int> insertedAt(n,-1);
-        for(int i=0;i<n;i++) {
-            if(lis.empty()||lis.back()<arr[i]) {
-                lis.push_back(arr[i]);
-                insertedAt[i]=lis.size();
-            }
-            else {
-                auto it=lower_bound(lis.begin(),lis.end(),arr[i]);
-                *it=arr[i];
-                insertedAt[i]=it-lis.begin()+1;
-            }
-            print(insertedAt);
-        }
-        int currLen=lis.size();
-        for(int i=n-1;i>=0;i--) {
-            if(currLen==insertedAt[i]) {
-                track.push_back(arr[i]);
-                currLen--;
-            }
-        }
-        reverse(track.begin(),track.end());
-        for(int i=0;i<track.size();i++) {
-            cout<<track[i]<<" ";
-        }
-        cout<<endl;
-        
-        return (int)lis.size();
-    }
 
 void solve()
 {
-    int n;
-    cin>>n;
-    vector<int> arr(n);
-    for(int i=0;i<n;i++) {
-        cin>>arr[i];
+    ll n;cin>>n;
+    vll arr(n);
+    f(i,0,n) cin>>arr[i];
+    vi even,odd;
+    for(ll i=0;i<n;i++) {
+        if(arr[i]&1) odd.pb(arr[i]);
+        else even.pb(arr[i]);
     }
-    cout<<lengthOfLIS(arr)<<endl;
+    if(odd.size()==0) {
+        for(ll i=0;i<n;i++) {
+            cout<<0<<' ';
+        }
+        cout<<endl;
+        return;
+    }
+    
+    sort(all(odd));
+    sort(all(even));
+    if(even.size()==0) {
+        ll sum=0;
+        for(ll i=1;i<=n;i++) {
+            if(i&1) {
+                cout<<odd.back()<<' ';
+            }
+            else {
+                cout<<0<<' ';
+            }
+        }
+        cout<<endl;
+        return;
+    }
+    vector<ll> ans(n+1);
+    ans[1]=odd.back();
+    odd.pop_back();
+    for(ll k=2;k<=n;k++) {
+        if(even.size()==0) {
+            ans[k]=ans[k-2];
+        }
+        else {
+            ans[k]=even.back()+ans[k-1];
+            even.pop_back();
+        }
+    }
+    ll sum=accumulate(arr.begin(),arr.end(),0LL);
+    if(sum&1^1) {
+        ans[n]=0;
+    }
+
+    for(ll k=1;k<=n;k++) {
+        cout<<ans[k]<<' ';
+    }cout<<endl;
+
 }
 
 int main()

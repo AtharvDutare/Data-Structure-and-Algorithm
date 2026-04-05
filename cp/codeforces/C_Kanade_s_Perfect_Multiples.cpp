@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
 
 /* clang-format off */
 
@@ -76,10 +73,6 @@ bool prime(ll a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a
 
 //static mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 //const int RD = rng() & ((1 << 31) - 1);
-typedef tree<int, null_type, less<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_set;
-typedef tree<int, null_type, less_equal<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_multiset;
-//FIND_BY_ORDER(K)  --> VALUE AT KTH INDEX (ITERATOR)
-//ORDER_OF_KEY(K)   --> INDEX OF VALUE K
 
 //fast exponanation
 ll power(int a,int b){
@@ -92,16 +85,56 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
+
+ WHAT ABOUT 1 1 1 1 1 1 1 1
 
 
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
+
 */
+
 void solve()
 {
+    ll n,k;
+    cin>>n>>k;
+    vll arr(n);
+    f(i,0,n) cin>>arr[i];
+    map<ll,ll> mp;
+    f(i,0,n) mp[arr[i]];
+    vector<ll> ans;
+    for(auto &x:mp) {
+        ll p=x.first;
+        ll f=0,t=0;
+        for(ll i=2;i*p<=k;i++) {
+            if(mp.find(i*p)==mp.end()) {
+                if(mp[p]>0) {
+                    mp[p]=-1;
+                }
+                else {
+                    cout<<-1<<endl;
+                    return;
+                }
+                break;
+            }
+            mp[i*p]++;
+        }
+    }
+    for(auto &x:mp) {
+        if(x.second==0) {
+            ans.pb(x.first);
+        }
+    }
+    
+    if(ans.size()==0) {
+        cout<<-1<<endl;
+        return;
+    }
+    else {
+        cout<<ans.size()<<endl;
+        for(int i=0;i<ans.size();i++) {
+            cout<<ans[i]<<" ";
+        }cout<<endl;
+    }
     
 }
 

@@ -94,15 +94,23 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
+int fun(int x) {
+    int n=bit_width((unsigned int)x);
+    for(int bit=0;bit<=n/2;bit++) {
+        int t=(x&(1<<bit))^(x&(1<<(n-bit-1)));
+        x^=(t<<(n-bit-1));
+        x^=(t<<(bit));
+    }
+    return x;
+}
 
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
-*/
+
 void solve()
 {
-    
+    int n;
+    cin>>n;
+    cout<<fun(5)<<endl;
+
 }
 
 int main()
@@ -115,5 +123,6 @@ int main()
     while(tc--){
         solve();
     }
+    cout.flush();
     return 0;
 }

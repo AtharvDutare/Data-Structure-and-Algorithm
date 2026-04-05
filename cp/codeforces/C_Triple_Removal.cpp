@@ -97,12 +97,61 @@ void no() { cout<<"NO\n"; }
 
 /* 
     Problem Statement: 
-    Observation: 
+    Observation:
     Thoughts: 
+        the problem is to find the minimum operation in the given
+        range because the element are slide by each operation
+
+
+        for each operation perform in the range the other parity 
+        number come close to 
+
+
+        it think i can use DSU 
+
+
 */
 void solve()
 {
-    
+    ll n,q;
+    cin>>n>>q;
+    vll pre0(n+1,0),pre1(n+1,0);
+    vll arr(n+1,0);
+    f(i,1,n+1) {
+        cin>>arr[i];
+        pre0[i]=pre0[i-1]+(arr[i]==0);
+        pre1[i]=pre1[i-1]+(arr[i]==1);
+       
+    }
+    vector<ll> ind0(n+1),ind1(n+1);
+    for(ll i=2;i<=n;i++) {
+        if(arr[i]==1&&arr[i-1]==arr[i]) {
+            ind1[i]++;
+        }
+        else if(arr[i]==0&&arr[i-1]==arr[i]) {
+            ind0[i]++;
+        }
+        ind0[i]+=ind0[i-1];
+        ind1[i]+=ind1[i-1];
+        
+    }
+    while(q--) {
+        ll l,r;
+        cin>>l>>r;
+        if((pre0[r]-pre0[l-1])%3==0&&(pre1[r]-pre1[l-1])%3==0) {
+            ll p=(pre0[r]-pre0[l-1])/3;
+            ll q=(pre1[r]-pre1[l-1])/3;
+            ll t=1;
+            if((ind0[r]-ind0[l]>=1)||(ind1[r]-ind1[l]>=1)) {
+                t=0;
+            }
+            cout<<p+q+t<<endl;
+        }
+        else {
+            cout<<-1<<endl;
+        }
+    }
+
 }
 
 int main()

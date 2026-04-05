@@ -39,3 +39,37 @@ public:
         return ans;
     }
 };
+
+class Solution {
+public:
+    int maxCoins(vector<int>& nums) {
+        int n=nums.size();
+        vector<int> arr;
+        arr.push_back(1);
+        for(int i=0;i<n;i++) {
+            arr.push_back(nums[i]);
+        }
+        arr.push_back(1);
+        vector<vector<int>> dp(n+2,vector<int>(n+2,0));
+        for(int g=0;g<n;++g) {
+            for(int i=1,j=g+1;j<=n;i++,j++) {
+                if(g==0) {
+                    dp[i][j]=arr[i-1]*arr[i]*arr[i+1];
+                }
+                else {
+                    int mini=0;
+                    for(int k=i;k<=j;k++) {
+                        mini=max(mini,dp[i][k-1]+dp[k+1][j]+arr[i-1]*arr[k]*arr[j+1]);
+                    }
+                    dp[i][j]=mini;
+                }
+            }
+        }
+        // for(int i=0;i<=n+1;i++) {
+        //     for(int j=0;j<=n+1;j++) {
+        //         cout<<dp[i][j]<<" ";
+        //     }cout<<endl;
+        // }
+        return dp[1][n];
+    }
+};

@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
 
 /* clang-format off */
 
@@ -76,10 +73,6 @@ bool prime(ll a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a
 
 //static mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 //const int RD = rng() & ((1 << 31) - 1);
-typedef tree<int, null_type, less<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_set;
-typedef tree<int, null_type, less_equal<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_multiset;
-//FIND_BY_ORDER(K)  --> VALUE AT KTH INDEX (ITERATOR)
-//ORDER_OF_KEY(K)   --> INDEX OF VALUE K
 
 //fast exponanation
 ll power(int a,int b){
@@ -92,17 +85,58 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on
+
+    winner when oppenent array is empty 
+
+    for each turn select the x from own array and select the maximum element 
+    if y<=x then destory(hahahahah ) the element y
+    else y-=x
+
+    both plays optimal  but who the selection of x the one which is optimal 
+
+    for any player to win we want to maintain the maximum and want to decrease their maximum element
 
 
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
+
+
+
 */
+
 void solve()
 {
-    
+    ll n,m;
+    cin>>n>>m;
+    vi a(n),b(m);
+    f(i,0,n) cin>>a[i];
+    f(i,0,m) cin>>b[i];
+    multiset<ll,greater<>> ast,bst;
+    f(i,0,n) ast.insert(a[i]);
+    f(i,0,m) bst.insert(b[i]);
+    ll t=0;
+    while(!ast.empty() and !bst.empty()) {
+        if(t==0) {
+            ll x=*ast.begin();
+            ll y=*bst.begin();
+            bst.erase(bst.begin());
+            if(y>x) {
+                bst.insert(y-x);
+            }
+        }
+        else {
+            ll x=*bst.begin();
+            ll y=*ast.begin();
+            ast.erase(ast.begin());
+            if(y>x) {
+                ast.insert(y-x);
+            }
+        }
+        t=!t;
+    }
+    if(ast.empty()) cout<<"Bob"<<endl;
+    else cout<<"Alice"<<endl;
+
+
 }
 
 int main()

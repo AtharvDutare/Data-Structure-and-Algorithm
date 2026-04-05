@@ -88,23 +88,58 @@ ll power(int a,int b){
     if(b%2==0) return( half_power*half_power)%MOD;
     return ((half_power*half_power)%MOD*a%MOD)%MOD;
 }
+int get_bit_length(unsigned int x) {
+    if (x == 0) return 0;
+    // sizeof(int) * 8 is the total bits (usually 32)
+    // __builtin_clz(x) counts the zeros starting from the most significant bit
+    return (sizeof(unsigned int) * 8) - __builtin_clz(x);
+}
 
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
 /* clang-format on */
-
-
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
-*/
-void solve()
-{
-    
+ll fun(ll x,ll p) {
+    ll n=p;
+    //cout<<n<<endl;
+    for(ll bit=0;bit<n/2;bit++) {
+        ll t=(((x)>>bit)&1)^(((x)>>(n-bit-1))&1);
+        x^=(t<<(n-bit-1));
+        x^=(t<<(bit));
+    }
+    return x;
 }
 
+
+void solve()
+{
+    ll n;
+    cin>>n;
+    ll t1=0;
+    ll t2=0;
+    bool t=0;
+    ll k=get_bit_length(n);
+    for(ll bit=0;bit<k;bit++) {
+        if((n>>bit)&1) {
+            if(t) {
+                t1+=(1<<bit);
+            }
+            else {
+                t2+=(1<<bit);
+            }
+            t=!t;
+        }
+    }
+    for(ll bit =get_bit_length(t1);bit<64;bit++) {
+        if(t1==fun(t2,bit))  {
+            yes();
+            return;
+        }
+        
+    }
+    no();
+
+}
 int main()
 {
     ios::sync_with_stdio(false);

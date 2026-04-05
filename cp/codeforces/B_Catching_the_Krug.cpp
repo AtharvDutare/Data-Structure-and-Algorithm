@@ -102,6 +102,8 @@ void no() { cout<<"NO\n"; }
 */
 void solve()
 {
+    int n,kx,ky,dx,dy;
+    cin>>n>>kx>>ky>>dx>>dy;
     
 }
 

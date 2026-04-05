@@ -92,16 +92,49 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
+
+    what the hell i am doing 
 
 
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
+    first for each sword(x) find the monster health (y) such that 
+
 */
+
+
 void solve()
 {
+    ll n,m;
+    cin>>n>>m;
+    vll a(n),b(m),c(m);
+    f(i,0,n) cin>>a[i];
+    f(i,0,m) cin>>b[i];
+    f(i,0,m) cin>>c[i];
+
+    vector<tuple<ll,ll,ll>> r;
+    for(int i=0;i<m;i++) {
+        r.push_back({(int)(c[i]==0),b[i],i});
+    }
+
+    sort(all(r));
+    multiset<int> st;
+    int ans=0;
+    for(int i=0;i<n;i++) {
+        st.insert(a[i]);
+    }
+    for(auto &[x,xx,i]:r) {
+        auto it=st.lower_bound(b[i]);
+       if(it != st.end()) {
+            ll p=*it;
+            st.erase(it);
+            ans++;
+            if(c[i]>0) {
+                st.insert(max(c[i],p));
+            }
+        }
+        
+    }
+    cout<<ans<<endl;
     
 }
 

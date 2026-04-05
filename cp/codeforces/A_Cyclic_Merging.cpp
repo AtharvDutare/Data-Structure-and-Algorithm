@@ -94,15 +94,20 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
-
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
-*/
 void solve()
 {
-    
+    ll n;
+    cin>>n;
+    vll arr(n);
+    ll maxi=0;
+    f(i,0,n) cin>>arr[i],maxi=max(maxi,arr[i]);
+    ll sum=0;
+    for(int i=0;i<n;i++) {
+        ll maxiele=max(arr[i],arr[(i+1)%n]);
+        sum+=maxiele;
+    }
+    cout<<sum-maxi<<endl;
+
 }
 
 int main()

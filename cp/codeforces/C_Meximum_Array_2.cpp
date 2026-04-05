@@ -92,17 +92,52 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
 
 
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
+    INTIUTION
+
+    we have the range in which have the importance of range
+
+
+    and can put  at range ==0
+
+
+
+
 */
+
 void solve()
 {
-    
+    int n,k,q;
+    cin>>n>>k>>q;
+    vector<vector<int>> v(q);
+    for(int i=0;i<q;i++) {
+        int c,l,r;
+        cin>>c>>l>>r;
+        v[i]={c,l,r};
+    }
+    vector<int> mn(n+1,0),mx(n+1,0);
+    for(int i=0;i<q;i++) {
+        for(int l=v[i][1];l<=v[i][2];l++) {
+            if(v[i][0]==1) mn[l]=1;
+            else mx[l]=1;
+        }
+    }
+    vector<int> range(n+1,0);
+    for(int i=1;i<=n;i++) {
+        if(mn[i]==1&&mx[i]==1) range[i]=k+1;
+        else if(mx[i]==1) range[i]=i%k;
+        else {
+            range[i]=k;
+        }
+    }
+    for(int i=1;i<=n;i++) {
+        cout<<range[i]<<" ";
+    }cout<<endl;
+
+      
+
 }
 
 int main()

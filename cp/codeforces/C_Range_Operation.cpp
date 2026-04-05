@@ -92,17 +92,39 @@ ll power(int a,int b){
 void yes() { cout<<"YES\n"; }
 void no() { cout<<"NO\n"; }
 
-/* clang-format on */
+/* clang-format on 
 
 
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
+    INTUITION
+
+
+    a1,a2,a3,a4,a5,a6
+
+
+
+
+
+
 */
+
 void solve()
 {
-    
+    ll n;
+    cin>>n;
+    vll arr(n+1,0);
+    f(i,1,n+1) cin>>arr[i];
+    ll deltaSum=0;
+    ll maxi=0;
+    ll sum=accumulate(all(arr),0LL);
+    vll pre(n+1,0);
+    for(ll i=1;i<=n;i++) pre[i]=pre[i-1]+arr[i];
+    for(ll i=1;i<=n;i++) {
+        maxi=max(maxi,-i*i+i+pre[i-1]);
+        ll t=i*i+i-pre[i];
+        deltaSum=max(deltaSum,t+maxi);
+        
+    }
+    cout<<sum+deltaSum<<endl;
 }
 
 int main()

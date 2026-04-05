@@ -1,8 +1,5 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
 using namespace std;
-using namespace __gnu_pbds;
 
 /* clang-format off */
 
@@ -61,6 +58,7 @@ void print(std::queue<T> q) {
     }
     std::cout << " ]" << std::endl;
 }
+
 template<typename... Args>
 void printAll(Args... args) {
     ((std::cout << args << " "), ...) << std::endl;
@@ -76,10 +74,6 @@ bool prime(ll a) { if (a==1) return 0; for (int i=2;i<=round(sqrt(a));++i) if (a
 
 //static mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 //const int RD = rng() & ((1 << 31) - 1);
-typedef tree<int, null_type, less<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_set;
-typedef tree<int, null_type, less_equal<int>, rb_tree_tag,tree_order_statistics_node_update>ordered_multiset;
-//FIND_BY_ORDER(K)  --> VALUE AT KTH INDEX (ITERATOR)
-//ORDER_OF_KEY(K)   --> INDEX OF VALUE K
 
 //fast exponanation
 ll power(int a,int b){
@@ -94,15 +88,95 @@ void no() { cout<<"NO\n"; }
 
 /* clang-format on */
 
-
-/* 
-    Problem Statement: 
-    Observation: 
-    Thoughts: 
-*/
 void solve()
 {
-    
+    ll n,h,k;
+    cin>>n>>h>>k;
+    vll arr(n+1);
+    ll sum=0;
+    f(i,1,n+1) cin>>arr[i],sum+=arr[i];
+    ll ans=(h/sum)*n+(h/sum)*k;
+    h=h%sum;
+    if(h==0) {
+        cout<<ans-k<<endl;
+        return;
+    }
+    vll summ(n+1,0),preMin(n+1),suffMax(n+2,0);
+    for(ll i=1;i<=n;i++) {
+        summ[i]=summ[i-1]+arr[i];
+        if(i==1) {
+            preMin[i]=arr[i];
+        }
+        else
+        preMin[i]=min(preMin[i-1],arr[i]);
+    }
+    for(ll i=n;i>-1;i--) {
+        // if(i==n) {
+        //     suffMax[i]=arr[i];
+        // }
+        // else
+        suffMax[i]=max(suffMax[i+1],arr[i]);
+    }
+    //cout<<ans<<endl;
+    for(ll r=1;r<=n;r++) {
+        ll temp=max(summ[r],summ[r]-preMin[r]+suffMax[r+1]);
+        //cout<<temp<<endl;
+        if(h-temp<=0) {
+            cout<<ans+r<<endl;
+            return;
+        }
+    }
+
+    cout<<ans+n<<endl;
+   
+}
+void solve1() {
+    ll n, h, k;
+    cin >> n >> h >> k;
+    vector<ll> a(n + 1);
+    ll S = 0;
+    for (int i = 1; i <= n; i++) {
+        cin >> a[i];
+        S += a[i];
+    }
+
+    vector<ll> pref_sum(n + 1, 0);
+    vector<ll> pref_min(n + 1, 2e9);
+    for (int i = 1; i <= n; i++) {
+        pref_sum[i] = pref_sum[i - 1] + a[i];
+        pref_min[i] = min(pref_min[i - 1], a[i]);
+    }
+
+    vector<ll> suff_max(n + 2, 0);
+    for (int i = n; i >= 1; i--) {
+        suff_max[i] = max(suff_max[i + 1], a[i]);
+    }
+
+    ll min_time = -1;
+
+    for (int r = 1; r <= n; r++) {
+        ll fr;
+        if (r < n) {
+            // Best damage in r bullets: either keep original or swap min-in-prefix with max-in-suffix
+            fr = max(pref_sum[r], pref_sum[r] - pref_min[r] + suff_max[r + 1]);
+        } else {
+            fr = S;
+        }
+
+        ll q = 0;
+        if (h > fr) {
+            // Damage needed from full magazines: h - fr
+            // Each full cycle provides S damage
+            q = (h - fr + S - 1) / S;
+        }
+
+        ll current_time = q * (n + k) + r;
+        if (min_time == -1 || current_time < min_time) {
+            min_time = current_time;
+        }
+    }
+
+    cout << min_time << "\n";
 }
 
 int main()

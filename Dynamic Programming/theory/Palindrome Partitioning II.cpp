@@ -49,3 +49,41 @@ public:
        return --ans; 
     }
 };
+
+class Solution {
+public:
+    int minCut(string s) {
+        int n=s.length();
+        s=" "+s;
+        vector<vector<int>> isPal(n+1,vector<int>(n+1,0));
+        for(int g=1;g<=n;g++) {
+            for(int i=1,j=g;j<=n;i++,j++) {
+                if(g==1) {
+                    isPal[i][i]=1;
+                }
+                else if(g==2) {
+                    isPal[i][j]=(s[i]==s[j]);
+                }
+                else {
+                    isPal[i][j] = (s[i] == s[j] && isPal[i + 1][j - 1]);
+                }
+            }
+        } 
+
+        vector<int> dp(n+1,0);
+        for(int i=1;i<=n;i++) {
+            if(isPal[1][i]) {
+                dp[i]=0;
+                continue;
+            }
+            int mini=i-1;
+            for(int j=1;j<=i;j++) {
+                if(isPal[j][i]) {
+                    mini=min(mini,1+dp[j-1]);
+                }
+                dp[i]=mini;
+            }
+        }
+        return dp[n];
+    }
+};
