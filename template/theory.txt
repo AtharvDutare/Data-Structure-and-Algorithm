@@ -9,7 +9,7 @@
 //R=(R+mod)%mod to (-2+5)=3
 
 //modular inverse
-//(a/b)%mod=a*inv(b)=((a%mod)*(b^(mod-2))%mod)%mod
+//(a/b)%mod=a*inv(b)=((a%mod)*(power(b,(mod-2)))%mod)%mod  //gcd(b,m)=1
 
 //PREFIX SUM
 // for(int i=1;i<=m;i++){
@@ -42,3 +42,227 @@
 //compliment of N=~N&((1<<L)-1) L is length of bit and N is bit
 // make clear last set bit is (x)&(x-1) or i-(i&-i)
 // get bitMask of only having last set bit of x is (x&(-x)) 
+
+PROPERTY OF GCD
+
+EVERY COMMON DIVISOR DIVIDES THE GCD
+=======================================
+
+Every common divisor of 'a' and 'b' is a divisor of gcd(a, b).
+
+---------------------------------------
+EXAMPLE
+---------------------------------------
+a = 24
+b = 36
+gcd = 12
+
+Common divisors of 24 and 36:
+1, 2, 3, 4, 6, 12
+
+Result: All of them divide 12.
+
+---------------------------------------
+WHY?
+---------------------------------------
+Because GCD is the greatest among all common divisors. 
+So every smaller common divisor must divide it.
+
+
+GCD AS A LINEAR COMBINATION
+===========================
+
+gcd(a, b) is the smallest positive integer that can be written as:
+ap + bq
+
+This is known as Bezout's identity.
+
+---------------------------
+EXAMPLE
+---------------------------
+a = 30, b = 18
+gcd = 6
+
+Ways to write it:
+6 = 30 * 1 + 18 * (-1)
+OR
+6 = 30 * (-1) + 18 * 2
+
+---------------------------
+WHY THIS MATTERS
+---------------------------
+This is the foundation of:
+- Extended Euclidean Algorithm
+- Modular inverse
+- Solving equations like: ax + by = c
+
+---------------------------
+INTUITION
+---------------------------
+All numbers of the form (a*p + b*q) are multiples of gcd(a, b). 
+The smallest positive result of that formula is the GCD itself.
+
+
+GCD WITH ZERO
+=============
+
+gcd(a, 0) = |a|
+
+---------------------------
+WHY?
+---------------------------
+- Every number divides 0.
+- Therefore, the largest divisor common to 'a' and 0 is 
+  the absolute value of 'a'.
+
+---------------------------
+EXAMPLES
+---------------------------
+gcd(7, 0) = 7
+gcd(0, 5) = 5
+
+---------------------------
+NOTE
+---------------------------
+This explains why the Euclidean Algorithm stops when b = 0.
+The remaining value 'a' at that point is your GCD.
+
+SCALING PROPERTY
+================
+
+gcd(m*a, m*b) = m * gcd(a, b)
+
+---------------------------
+EXAMPLE
+---------------------------
+a = 8, b = 12
+gcd = 4
+
+Multiply both by 5:
+gcd(40, 60) = 20 (which is 5 * 4)
+
+---------------------------
+IMPORTANT CONCLUSION
+---------------------------
+If gcd(a, b) = g, then:
+gcd(a/g, b/g) = 1
+
+Summary: After dividing by their GCD, two numbers always 
+become coprime (meaning they share no more common factors).
+
+ADDING MULTIPLES PROPERTY
+=========================
+
+gcd(a, b) = gcd(a + mb, b)
+
+---------------------------
+EXAMPLE
+---------------------------
+a = 14, b = 8
+gcd(14, 8) = 2
+
+Add 2 * 8 (which is 16) to 'a':
+gcd(14 + 16, 8) = gcd(30, 8) = 2
+
+---------------------------
+INTUITION
+---------------------------
+- Adding multiples of one number to the other doesn't change 
+  the "common structure" or common divisors between them.
+- This property is exactly why the Euclidean Algorithm works 
+  (by repeatedly taking the remainder/modulo).
+
+EUCLIDEAN IDENTITY
+==================
+gcd(a, b) = gcd(b, a % b)
+
+This is the heart of all GCD computation.
+
+---------------------------
+EXAMPLE
+---------------------------
+gcd(48, 18)
+= gcd(18, 48 % 18)
+= gcd(18, 12)
+= gcd(12, 6)
+= gcd(6, 0)
+= 6
+
+---------------------------
+LOGARITHMIC TIME
+---------------------------
+Because the numbers reduce so quickly (specifically, they 
+at least halve every two steps), the Euclidean Algorithm 
+runs in O(log(min(a, b))) time.
+
+
+GCD IS MULTIPLICATIVE (WITH CONDITION!)
+=======================================
+If a1 and a2 are coprime, then:
+gcd(a1 * a2, b) = gcd(a1, b) * gcd(a2, b)
+
+---------------------------
+EXAMPLE
+---------------------------
+a1 = 4, a2 = 9 (These are coprime)
+b = 6
+
+Check:
+gcd(4 * 9, 6) = gcd(36, 6) = 6
+
+Breaking it down:
+gcd(4, 6) = 2
+gcd(9, 6) = 3
+2 * 3 = 6 (Correct)
+
+---------------------------
+CRITICAL WARNING
+---------------------------
+If a1 and a2 are NOT coprime, this property FAILS.
+Always check for coprimality before splitting the GCD.
+
+
+GCD->>>>>
+COMMUTATIVE PROPERTY
+====================
+gcd(a, b) = gcd(b, a)
+The order of numbers does not matter.
+
+
+ASSOCIATIVE PROPERTY
+====================
+gcd(a, gcd(b, c)) = gcd(gcd(a, b), c)
+
+---------------------------
+APPLICATIONS
+---------------------------
+This allows finding the GCD of multiple numbers:
+gcd(a, b, c, d, ...)
+
+Used for:
+- GCD of arrays
+- Prefix / Suffix GCD arrays
+
+
+DISTRIBUTIVE IDENTITIES
+=======================
+gcd(a, lcm(b, c)) = lcm(gcd(a, b), gcd(a, c))
+
+GEOMETRIC INTERPRETATION
+========================
+On a grid, the number of integer points on the line 
+from (0,0) to (a,b) is:
+gcd(a, b) + 1
+
+---------------------------
+EXAMPLE
+---------------------------
+a = 6, b = 4
+gcd(6, 4) = 2
+
+There are 3 integer points on that line:
+(0,0), (3,2), and (6,4).
+PICK THEOREM ->>>>.https://www.youtube.com/watch?v=gukH7Yku9lI $$$TODO
+
+
+GCD OF ARITHMETIC PROGRESSION ->> GCD(a,d)

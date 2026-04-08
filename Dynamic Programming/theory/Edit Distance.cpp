@@ -88,3 +88,35 @@ public:
         return ans;
     }
 };
+
+
+class Solution {
+public:
+    int minDistance(string a, string b) {
+        int m=a.length();
+        int n=b.length();
+        a=" "+a;
+        b=" "+b;
+        vector<vector<int>> dp(m+1,vector<int>(n+1,0));
+        for(int i=1;i<=m;i++) {
+            dp[i][0]=i;
+        }
+        for(int i=1;i<=n;i++) {
+            dp[0][i]=i;
+        }
+        for(int i=1;i<=m;i++) {
+            for(int j=1;j<=n;j++) {
+                if(a[i]==b[j]) {
+                    dp[i][j]=dp[i-1][j-1];
+                }
+                else {
+                    int in=1+dp[i-1][j];
+                    int del=1+dp[i][j-1];
+                    int rep=1+dp[i-1][j-1];
+                    dp[i][j]=min(in,min(del,rep));
+                }
+            }
+        }
+        return dp[m][n];
+    }
+};
